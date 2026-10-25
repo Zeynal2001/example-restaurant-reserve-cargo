@@ -17,7 +17,7 @@ export const TRANSLATIONS = {
 
     // Developer Banner
     dev_banner_badge: "Developer Portfolio",
-    dev_banner_text: "Bu vebsayt restoran və kafelər üçün nümunə kimi hazırlanıb (Backend-siz, WhatsApp & LocalStorage inteqrasiyası ilə).",
+    dev_banner_text: "Bu vebsayt restoran və kafelər üçün nümunə kimi hazırlanıb.",
     dev_banner_contact: "Sayt Sifarişi Üçün Əlaqə",
 
     // Hero Section
@@ -64,6 +64,16 @@ export const TRANSLATIONS = {
     filter_chef: "Şefin Seçimi",
     filter_halal: "Halal",
     filter_veg: "Vegetarian",
+    filter_favorites: "Sevimlilər",
+    fav_drawer_title: "Sevimlilər",
+    fav_empty_title: "Sevimlilər siyahınız boşdur",
+    fav_empty_sub: "Bəyəndiyiniz təamların üzərindəki ürək ikonuna klikləyərək onları burada toplaya bilərsiniz.",
+    fav_add_all_cart: "Hamısını Səbətə At",
+    fav_clear_all: "Sevimliləri Təmizlə",
+    fav_item_added_all: "Bütün sevimli təamlar səbətə əlavə olundu!",
+    fav_toast_added: "Sevimlilərə əlavə olundu!",
+    fav_toast_removed: "Sevimlilərdən çıxarıldı",
+    fav_clear_all_toast: "Bütün sevimlilər təmizləndi",
     btn_add_cart: "Səbətə At",
 
     // Reservation Section
@@ -246,6 +256,16 @@ export const TRANSLATIONS = {
     filter_chef: "Chef's Choice",
     filter_halal: "Halal",
     filter_veg: "Vegetarian",
+    filter_favorites: "Favorites",
+    fav_drawer_title: "Favorites",
+    fav_empty_title: "Your favorites list is empty",
+    fav_empty_sub: "Click the heart icon on any dish to save it to your favorites.",
+    fav_add_all_cart: "Add All to Cart",
+    fav_clear_all: "Clear Favorites",
+    fav_item_added_all: "All favorite dishes added to cart!",
+    fav_toast_added: "Added to favorites!",
+    fav_toast_removed: "Removed from favorites",
+    fav_clear_all_toast: "All favorites cleared",
     btn_add_cart: "Add to Cart",
 
     // Reservation Section
@@ -428,6 +448,16 @@ export const TRANSLATIONS = {
     filter_chef: "Выбор шефа",
     filter_halal: "Халяль",
     filter_veg: "Вегетарианское",
+    filter_favorites: "Избранное",
+    fav_drawer_title: "Избранное",
+    fav_empty_title: "Список избранного пуст",
+    fav_empty_sub: "Нажмите на значок сердечка на любом блюде, чтобы добавить его в избранное.",
+    fav_add_all_cart: "Добавить всё в корзину",
+    fav_clear_all: "Очистить избранное",
+    fav_item_added_all: "Все избранные блюда добавлены в корзину!",
+    fav_toast_added: "Добавлено в избранное!",
+    fav_toast_removed: "Удалено из избранного",
+    fav_clear_all_toast: "Все избранные блюда очищены",
     btn_add_cart: "В корзину",
 
     // Reservation Section

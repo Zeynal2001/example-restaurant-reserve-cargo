@@ -1,35 +1,43 @@
 <!DOCTYPE html>
 <html lang="az" data-theme="dark">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aura Gourmet & Lounge | Restoran, Rezervasiya və Sürətli Çatdırılma</title>
-  
+
   <!-- Meta SEO -->
-  <meta name="description" content="Aura Gourmet & Lounge — Bakının mərkəzində lüks qastronomiya təcrübəsi, onlayn masa rezervasiyası və qapıya sürətli termo-karqo çatdırılma xidməti.">
-  <meta name="keywords" content="restoran baku, masa rezervasiyasi, online yemek sifarisi, baki catdirilma, gourmet lounge, steyk, deniz mehsullari">
+  <meta name="description"
+    content="Aura Gourmet & Lounge — Bakının mərkəzində lüks qastronomiya təcrübəsi, onlayn masa rezervasiyası və qapıya sürətli termo-karqo çatdırılma xidməti.">
+  <meta name="keywords"
+    content="restoran baku, masa rezervasiyasi, online yemek sifarisi, baki catdirilma, gourmet lounge, steyk, deniz mehsullari">
   <meta name="author" content="Developer Portfolio Showcase">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Aura Gourmet & Lounge — Lüks Restoran & Çatdırılma">
-  <meta property="og:description" content="Onlayn masa rezervi, zəngin menyu və birbaşa WhatsApp / Kuryer çatdırılma sistemi.">
+  <meta property="og:description"
+    content="Onlayn masa rezervi, zəngin menyu və birbaşa WhatsApp / Kuryer çatdırılma sistemi.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80">
+  <meta property="og:image"
+    content="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/variables.css?v=6">
-  <link rel="stylesheet" href="css/main.css?v=6">
+  <link rel="stylesheet" href="css/variables.css?v=7">
+  <link rel="stylesheet" href="css/main.css?v=7">
 </head>
+
 <body>
 
   <!-- Developer Pitch Banner (Perfect for pitching to clients) -->
   <div class="dev-pitch-banner">
     <span class="pitch-badge" data-i18n="dev_banner_badge"><i class="fa-solid fa-code"></i> Developer Portfolio</span>
-    <span data-i18n="dev_banner_text">Bu vebsayt restoran və kafelər üçün nümunə kimi hazırlanıb (Backend-siz, WhatsApp & LocalStorage inteqrasiyası ilə).</span>
-    <a href="https://wa.me/994508904040?text=Salam,%20restoran%20üçün%20vebsayt%20hazırlatmaq%20istəyirəm" target="_blank" style="color: var(--color-accent-gold); text-decoration: underline; font-weight: 700;">
+    <span data-i18n="dev_banner_text">Bu vebsayt restoran və kafelər üçün nümunə kimi hazırlanıb.</span>
+    <a href="https://wa.me/994556548514?text=Salam,%20restoran%20üçün%20vebsayt%20hazırlatmaq%20istəyirəm"
+      target="_blank" style="color: var(--color-accent-gold); text-decoration: underline; font-weight: 700;">
       <i class="fa-brands fa-whatsapp"></i> <span data-i18n="dev_banner_contact">Sayt Sifarişi Üçün Əlaqə</span>
     </a>
   </div>
@@ -75,6 +83,12 @@
           </div>
         </div>
 
+        <!-- Favorites Trigger -->
+        <button class="fav-trigger-btn" id="favTriggerBtn" onclick="window.openFavorites()" title="Sevimlilər">
+          <i class="fa-solid fa-heart"></i>
+          <span class="fav-count" id="headerFavCount" style="display: none;">0</span>
+        </button>
+
         <!-- Cart Trigger -->
         <button class="cart-trigger-btn" onclick="window.openCart()" title="Səbətə bax">
           <i class="fa-solid fa-basket-shopping"></i>
@@ -110,7 +124,8 @@
         </h1>
 
         <p class="hero-desc" data-i18n="hero_desc">
-          Aura Gourmet & Lounge — canlı royal melodiyaları, təcrübəli şeflərimizin lüks steykləri və dəniz məhsulları ilə unudulmaz təəssürat yaradır.
+          Aura Gourmet & Lounge — canlı royal melodiyaları, təcrübəli şeflərimizin lüks steykləri və dəniz məhsulları
+          ilə unudulmaz təəssürat yaradır.
         </p>
 
         <div class="hero-cta-group">
@@ -143,7 +158,8 @@
       <!-- Hero Showcase Card -->
       <div class="hero-card">
         <div class="hero-card-img-wrap">
-          <img src="https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=700&q=80" alt="Ribeye Steak">
+          <img src="https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=700&q=80"
+            alt="Ribeye Steak">
           <div class="hero-badge-floating">
             <i class="fa-solid fa-award"></i> <span data-i18n="hero_dish_rec">Günün Şef Tövsiyəsi</span>
           </div>
@@ -205,8 +221,10 @@
   <section class="section" id="about">
     <div class="container about-grid">
       <div class="about-images-collage">
-        <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80" alt="Restaurant Interior" class="about-img-main">
-        <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=600&q=80" alt="Executive Chef" class="about-img-sub">
+        <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80"
+          alt="Restaurant Interior" class="about-img-main">
+        <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=600&q=80"
+          alt="Executive Chef" class="about-img-sub">
         <div class="experience-badge">
           <h3>12</h3>
           <p data-i18n="about_exp_badge">İl Qastronomiya Zirvəsində</p>
@@ -214,13 +232,17 @@
       </div>
 
       <div class="about-content">
-        <span class="section-tag"><i class="fa-solid fa-sparkles"></i> <span data-i18n="about_tag">Haqqımızda</span></span>
+        <span class="section-tag"><i class="fa-solid fa-sparkles"></i> <span
+            data-i18n="about_tag">Haqqımızda</span></span>
         <h2 class="section-title" data-i18n="about_title">Hər Təam Bir İncəsənət Əsəridir</h2>
         <p data-i18n="about_p1">
-          Aura Gourmet & Lounge — klassik Avropa və zəngin Şərq kulinariyasını müasir qastronomiya texnikaları ilə birləşdirir. Biz hər bir inqrediyenti diqqətlə seçir, ətlərimizi xüsusi kameralarda 28 gün dinləndirir və süfrənizə təqdim edirik.
+          Aura Gourmet & Lounge — klassik Avropa və zəngin Şərq kulinariyasını müasir qastronomiya texnikaları ilə
+          birləşdirir. Biz hər bir inqrediyenti diqqətlə seçir, ətlərimizi xüsusi kameralarda 28 gün dinləndirir və
+          süfrənizə təqdim edirik.
         </p>
         <p data-i18n="about_p2">
-          Şəhərin səs-küyündən uzaqlaşaraq zərif interyerimizdə şam yeməyi yeyə, yaxud evinizdə və ofisinizdə bizim lüks termo-karqo çatdırılma xidmətimizdən yararlana bilərsiniz.
+          Şəhərin səs-küyündən uzaqlaşaraq zərif interyerimizdə şam yeməyi yeyə, yaxud evinizdə və ofisinizdə bizim lüks
+          termo-karqo çatdırılma xidmətimizdən yararlana bilərsiniz.
         </p>
 
         <div class="features-list">
@@ -255,10 +277,12 @@
   <section class="section section-alt" id="menu">
     <div class="container">
       <div class="text-center">
-        <span class="section-tag"><i class="fa-solid fa-utensils"></i> <span data-i18n="menu_tag">Kulinariya İnciləri</span></span>
+        <span class="section-tag"><i class="fa-solid fa-utensils"></i> <span data-i18n="menu_tag">Kulinariya
+            İnciləri</span></span>
         <h2 class="section-title" data-i18n="menu_title">Nəfis Menyu & Onlayn Sifariş</h2>
         <p class="section-subtitle" data-i18n="menu_sub">
-          Şeflərimizin xüsusi reseptlərlə hazırladığı zəngin təamları kəşf edin. Səbətə əlavə edərək qapınıza çatdırılma və ya restorandan gəl-götür sifariş verin.
+          Şeflərimizin xüsusi reseptlərlə hazırladığı zəngin təamları kəşf edin. Səbətə əlavə edərək qapınıza çatdırılma
+          və ya restorandan gəl-götür sifariş verin.
         </p>
       </div>
 
@@ -266,7 +290,8 @@
       <div class="menu-controls">
         <div class="menu-search-box">
           <i class="fa-solid fa-magnifying-glass search-icon"></i>
-          <input type="text" id="menuSearchInput" data-i18n-placeholder="menu_search_placeholder" placeholder="Təam adı və ya inqrediyent axtarın (məs: Steyk, Pasta, Somon)...">
+          <input type="text" id="menuSearchInput" data-i18n-placeholder="menu_search_placeholder"
+            placeholder="Təam adı və ya inqrediyent axtarın (məs: Steyk, Pasta, Somon)...">
         </div>
 
         <div class="category-tabs" id="menuCategories">
@@ -276,10 +301,16 @@
         <!-- Quick filter chips -->
         <div class="quick-filters-row">
           <button class="cat-btn quick-filter-btn active" data-filter="all" data-i18n="filter_all">Hamısı</button>
-          <button class="cat-btn quick-filter-btn" data-filter="popular"><i class="fa-solid fa-fire text-gold"></i> <span data-i18n="filter_popular">Populyar</span></button>
-          <button class="cat-btn quick-filter-btn" data-filter="chef"><i class="fa-solid fa-award text-gold"></i> <span data-i18n="filter_chef">Şefin Seçimi</span></button>
-          <button class="cat-btn quick-filter-btn" data-filter="halal"><i class="fa-solid fa-certificate text-gold"></i> <span data-i18n="filter_halal">Halal</span></button>
-          <button class="cat-btn quick-filter-btn" data-filter="vegetarian"><i class="fa-solid fa-leaf" style="color: #10b981;"></i> <span data-i18n="filter_veg">Vegetarian</span></button>
+          <button class="cat-btn quick-filter-btn" data-filter="popular"><i class="fa-solid fa-fire text-gold"></i>
+            <span data-i18n="filter_popular">Populyar</span></button>
+          <button class="cat-btn quick-filter-btn" data-filter="chef"><i class="fa-solid fa-award text-gold"></i> <span
+              data-i18n="filter_chef">Şefin Seçimi</span></button>
+          <button class="cat-btn quick-filter-btn" data-filter="halal"><i class="fa-solid fa-certificate text-gold"></i>
+            <span data-i18n="filter_halal">Halal</span></button>
+          <button class="cat-btn quick-filter-btn" data-filter="vegetarian"><i class="fa-solid fa-leaf"
+              style="color: #10b981;"></i> <span data-i18n="filter_veg">Vegetarian</span></button>
+          <button class="cat-btn quick-filter-btn" data-filter="favorites" id="favQuickFilterBtn"><i class="fa-solid fa-heart"
+              style="color: #ef4444;"></i> <span data-i18n="filter_favorites">Sevimlilər</span> <span class="fav-badge-pill" id="favFilterBadge" style="display: none;">0</span></button>
         </div>
       </div>
 
@@ -295,10 +326,12 @@
     <div class="container reservation-grid">
       <!-- Left info column -->
       <div class="res-info-card">
-        <span class="section-tag"><i class="fa-regular fa-clock"></i> <span data-i18n="res_tag">Onlayn Rezervasiya</span></span>
+        <span class="section-tag"><i class="fa-regular fa-clock"></i> <span data-i18n="res_tag">Onlayn
+            Rezervasiya</span></span>
         <h2 class="section-title" data-i18n="res_title" style="font-size: 2.2rem;">Masanızı Əvvəlcədən Təmin Edin</h2>
         <p data-i18n="res_sub" style="color: var(--color-text-secondary); margin-bottom: 1.5rem;">
-          Özəl anlarınızı təsadüfə buraxmayın. Romantik şam yeməyi, ad günü və ya işgüzar görüşləriniz üçün istədiyiniz zonanı və masanı seçin.
+          Özəl anlarınızı təsadüfə buraxmayın. Romantik şam yeməyi, ad günü və ya işgüzar görüşləriniz üçün istədiyiniz
+          zonanı və masanı seçin.
         </p>
 
         <div class="res-perks">
@@ -314,7 +347,8 @@
             <div class="res-perk-icon"><i class="fa-solid fa-gem"></i></div>
             <div>
               <h4 data-i18n="res_perk2_t">Seçilmiş Masa Zəmanəti</h4>
-              <p data-i18n="res_perk2_d">Teras, dəniz panoraması və ya şöminəli VIP otaq - seçim tam sizin ixtiyarınızdadır.</p>
+              <p data-i18n="res_perk2_d">Teras, dəniz panoraması və ya şöminəli VIP otaq - seçim tam sizin
+                ixtiyarınızdadır.</p>
             </div>
           </div>
 
@@ -322,15 +356,18 @@
             <div class="res-perk-icon"><i class="fa-solid fa-cake-candles"></i></div>
             <div>
               <h4 data-i18n="res_perk3_t">Özəl Tədbir Dekorasiyası</h4>
-              <p data-i18n="res_perk3_d">Ad günü və evlilik təklifləri üçün masa çiçəklər və şamlarla xüsusi bəzədilir.</p>
+              <p data-i18n="res_perk3_d">Ad günü və evlilik təklifləri üçün masa çiçəklər və şamlarla xüsusi bəzədilir.
+              </p>
             </div>
           </div>
         </div>
 
         <div class="check-res-banner">
           <div>
-            <h5 data-i18n="res_check_prompt" style="font-size: 0.95rem; font-weight: 700;">Artıq rezervasiyanız var?</h5>
-            <p data-i18n="res_check_sub" style="font-size: 0.8rem; color: var(--color-text-muted);">Rezervasiyanızı yoxlayın və ya ləğv edin</p>
+            <h5 data-i18n="res_check_prompt" style="font-size: 0.95rem; font-weight: 700;">Artıq rezervasiyanız var?
+            </h5>
+            <p data-i18n="res_check_sub" style="font-size: 0.8rem; color: var(--color-text-muted);">Rezervasiyanızı
+              yoxlayın və ya ləğv edin</p>
           </div>
           <button class="btn btn-secondary btn-sm" onclick="window.openMyReservationsModal()">
             <i class="fa-regular fa-eye"></i> <span data-i18n="res_check_btn">Yoxla</span>
@@ -344,7 +381,8 @@
         <form id="reservationForm">
           <!-- Zone selector -->
           <div class="form-group">
-            <label class="form-label"><i class="fa-solid fa-map-pin text-gold"></i> <span data-i18n="res_zone_label">Restoran Zonası Seçin:</span></label>
+            <label class="form-label"><i class="fa-solid fa-map-pin text-gold"></i> <span
+                data-i18n="res_zone_label">Restoran Zonası Seçin:</span></label>
             <div class="zone-selector" id="zoneChipsContainer">
               <!-- Rendered via js/reservation.js -->
             </div>
@@ -352,24 +390,28 @@
 
           <div class="form-group-grid">
             <div class="form-group">
-              <label class="form-label" for="resName"><i class="fa-regular fa-user text-gold"></i> <span data-i18n="res_name_label">Ad və Soyad *</span></label>
+              <label class="form-label" for="resName"><i class="fa-regular fa-user text-gold"></i> <span
+                  data-i18n="res_name_label">Ad və Soyad *</span></label>
               <input type="text" id="resName" class="form-control" placeholder="Məs: Elvin Məmmədov" required>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="resPhone"><i class="fa-solid fa-phone text-gold"></i> <span data-i18n="res_phone_label">Telefon Nömrəsi *</span></label>
+              <label class="form-label" for="resPhone"><i class="fa-solid fa-phone text-gold"></i> <span
+                  data-i18n="res_phone_label">Telefon Nömrəsi *</span></label>
               <input type="tel" id="resPhone" class="form-control" placeholder="+994 (50) 000-00-00" required>
             </div>
           </div>
 
           <div class="form-group-grid">
             <div class="form-group">
-              <label class="form-label" for="resDate"><i class="fa-regular fa-calendar text-gold"></i> <span data-i18n="res_date_label">Tarix *</span></label>
+              <label class="form-label" for="resDate"><i class="fa-regular fa-calendar text-gold"></i> <span
+                  data-i18n="res_date_label">Tarix *</span></label>
               <input type="date" id="resDate" class="form-control" required>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="timeSlotsSelect"><i class="fa-regular fa-clock text-gold"></i> <span data-i18n="res_time_label">Saat Seçin *</span></label>
+              <label class="form-label" for="timeSlotsSelect"><i class="fa-regular fa-clock text-gold"></i> <span
+                  data-i18n="res_time_label">Saat Seçin *</span></label>
               <select id="timeSlotsSelect" class="form-control">
                 <!-- Rendered dynamically -->
               </select>
@@ -378,7 +420,8 @@
 
           <div class="form-group-grid">
             <div class="form-group">
-              <label class="form-label" for="resGuests"><i class="fa-solid fa-users text-gold"></i> <span data-i18n="res_guests_label">Qonaq Sayı</span></label>
+              <label class="form-label" for="resGuests"><i class="fa-solid fa-users text-gold"></i> <span
+                  data-i18n="res_guests_label">Qonaq Sayı</span></label>
               <select id="resGuests" class="form-control">
                 <option value="1 nəfər">1 nəfər (Fərdi)</option>
                 <option value="2 nəfər" selected>2 nəfər (Cütlük)</option>
@@ -391,7 +434,8 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="resOccasion"><i class="fa-solid fa-champagne-glasses text-gold"></i> <span data-i18n="res_occasion_label">Tədbir / Məqsəd</span></label>
+              <label class="form-label" for="resOccasion"><i class="fa-solid fa-champagne-glasses text-gold"></i> <span
+                  data-i18n="res_occasion_label">Tədbir / Məqsəd</span></label>
               <select id="resOccasion" class="form-control">
                 <option value="Standart Nahar / Şam">Standart Nahar / Şam Yeməyi</option>
                 <option value="Ad Günü & Yubiley Qeyd etməsi">Ad Günü & Yubiley Qeyd etməsi</option>
@@ -406,8 +450,10 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="resNotes"><i class="fa-regular fa-comment-dots text-gold"></i> <span data-i18n="res_notes_label">Xüsusi İstək və Qeydləriniz</span></label>
-            <input type="text" id="resNotes" class="form-control" data-i18n-placeholder="res_notes_placeholder" placeholder="Məs: Pəncərə kənarı olsun, uşaq oturacağı lazımdır...">
+            <label class="form-label" for="resNotes"><i class="fa-regular fa-comment-dots text-gold"></i> <span
+                data-i18n="res_notes_label">Xüsusi İstək və Qeydləriniz</span></label>
+            <input type="text" id="resNotes" class="form-control" data-i18n-placeholder="res_notes_placeholder"
+              placeholder="Məs: Pəncərə kənarı olsun, uşaq oturacağı lazımdır...">
           </div>
 
           <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 1.1rem;">
@@ -422,10 +468,12 @@
   <section class="section section-alt" id="cargo">
     <div class="container">
       <div class="text-center">
-        <span class="section-tag"><i class="fa-solid fa-truck-ramp-box"></i> <span data-i18n="cargo_tag">Termo-Karqo Sistemi</span></span>
+        <span class="section-tag"><i class="fa-solid fa-truck-ramp-box"></i> <span data-i18n="cargo_tag">Termo-Karqo
+            Sistemi</span></span>
         <h2 class="section-title" data-i18n="cargo_title">Qapınıza Qədər Restoran Keyfiyyəti</h2>
         <p class="section-subtitle" data-i18n="cargo_sub">
-          İsti yeməkləriniz xüsusi hermetik termo-çantalarla birbaşa mətbəxdən süfrənizə çatdırılır. Sürətli, etibarlı və təzə.
+          İsti yeməkləriniz xüsusi hermetik termo-çantalarla birbaşa mətbəxdən süfrənizə çatdırılır. Sürətli, etibarlı
+          və təzə.
         </p>
       </div>
 
@@ -464,13 +512,17 @@
       <div class="cargo-live-simulator">
         <div class="simulator-header">
           <div>
-            <h3><i class="fa-solid fa-route text-gold"></i> <span data-i18n="tracker_title">Canlı Karqo / Çatdırılma İzləmə Sistemi</span></h3>
-            <p data-i18n="tracker_sub" style="color: var(--color-text-secondary); font-size: 0.85rem; margin-top: 0.3rem;">
+            <h3><i class="fa-solid fa-route text-gold"></i> <span data-i18n="tracker_title">Canlı Karqo / Çatdırılma
+                İzləmə Sistemi</span></h3>
+            <p data-i18n="tracker_sub"
+              style="color: var(--color-text-secondary); font-size: 0.85rem; margin-top: 0.3rem;">
               Sifarişinizin cari statusunu real vaxt rejimində izləyin
             </p>
           </div>
           <div style="display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap;">
-            <input type="text" id="trackOrderInput" data-i18n-placeholder="tracker_search_placeholder" placeholder="Sifariş No (Məs: CARGO-7821)" class="form-control" style="width: 220px; padding: 0.5rem 0.8rem; font-size: 0.85rem;">
+            <input type="text" id="trackOrderInput" data-i18n-placeholder="tracker_search_placeholder"
+              placeholder="Sifariş No (Məs: CARGO-7821)" class="form-control"
+              style="width: 220px; padding: 0.5rem 0.8rem; font-size: 0.85rem;">
             <button class="btn btn-secondary btn-sm" onclick="window.trackOrderByUserInput()">
               <i class="fa-solid fa-magnifying-glass"></i> <span data-i18n="tracker_btn">İzlə</span>
             </button>
@@ -505,10 +557,12 @@
 
         <div class="simulator-map-mock">
           <div class="courier-info">
-            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&q=80" alt="Kuryer" class="courier-avatar">
+            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&q=80"
+              alt="Kuryer" class="courier-avatar">
             <div>
               <h4 data-i18n="tracker_courier_name">Kuryer: Rəşad Quliyev</h4>
-              <p><i class="fa-solid fa-shield-halved text-gold"></i> <span data-i18n="tracker_courier_desc">Termo-çanta təchizatlı • Motonəqliyyat</span></p>
+              <p><i class="fa-solid fa-shield-halved text-gold"></i> <span data-i18n="tracker_courier_desc">Termo-çanta
+                  təchizatlı • Motonəqliyyat</span></p>
             </div>
           </div>
 
@@ -525,7 +579,8 @@
   <section class="section" id="reviews">
     <div class="container">
       <div class="text-center">
-        <span class="section-tag"><i class="fa-solid fa-star"></i> <span data-i18n="reviews_tag">Müştəri Rəyləri</span></span>
+        <span class="section-tag"><i class="fa-solid fa-star"></i> <span data-i18n="reviews_tag">Müştəri
+            Rəyləri</span></span>
         <h2 class="section-title" data-i18n="reviews_title">Qonaqlarımızın Fikirləri</h2>
         <p class="section-subtitle" data-i18n="reviews_sub">
           Google və Tripadvisor-da 4.9 ulduzla qiymətləndirilən Aura Gourmet atmosferi haqqında qonaqlarımızın rəyləri.
@@ -542,7 +597,8 @@
   <section class="section section-alt" id="contact">
     <div class="container">
       <div class="text-center">
-        <span class="section-tag"><i class="fa-solid fa-location-dot"></i> <span data-i18n="contact_tag">Əlaqə & Məkan</span></span>
+        <span class="section-tag"><i class="fa-solid fa-location-dot"></i> <span data-i18n="contact_tag">Əlaqə &
+            Məkan</span></span>
         <h2 class="section-title" data-i18n="contact_title">Bizi Ziyarət Edin</h2>
         <p class="section-subtitle" data-i18n="contact_sub">
           Bakının mərkəzində, Fəvvarələr Meydanının bir addımlığında sizi gözləyirik.
@@ -580,7 +636,8 @@
             <div>
               <h4 data-i18n="contact_wa_t">WhatsApp Birbaşa Əlaqə</h4>
               <p data-i18n="contact_wa_d" style="margin-bottom: 0.5rem;">Sualınız və ya xüsusi sifarişiniz var?</p>
-              <a href="https://wa.me/994508904040?text=Salam,%20Aura%20Gourmet%20haqqında%20məlumat%20almaq%20istəyirəm" target="_blank" class="btn btn-whatsapp btn-sm">
+              <a href="https://wa.me/994508904040?text=Salam,%20Aura%20Gourmet%20haqqında%20məlumat%20almaq%20istəyirəm"
+                target="_blank" class="btn btn-whatsapp btn-sm">
                 <i class="fa-brands fa-whatsapp"></i> <span data-i18n="contact_wa_btn">WhatsApp ilə Yazın</span>
               </a>
             </div>
@@ -589,12 +646,9 @@
 
         <!-- Map Embed -->
         <div class="map-card">
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3039.42998393522!2d49.83492727653775!3d40.37050305804369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307db4ef0e8125%3A0xc36a43b4d4554b96!2sFountains%20Square!5e0!3m2!1sen!2saz!4v1700000000000!5m2!1sen!2saz" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Aura Gourmet Xəritə">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3039.42998393522!2d49.83492727653775!3d40.37050305804369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307db4ef0e8125%3A0xc36a43b4d4554b96!2sFountains%20Square!5e0!3m2!1sen!2saz!4v1700000000000!5m2!1sen!2saz"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Aura Gourmet Xəritə">
           </iframe>
         </div>
       </div>
@@ -615,7 +669,8 @@
 
     <div class="cart-footer">
       <div class="promo-row">
-        <input type="text" id="promoCodeInput" data-i18n-placeholder="cart_promo_placeholder" placeholder="Promo Kod (məs: BAKU2026)">
+        <input type="text" id="promoCodeInput" data-i18n-placeholder="cart_promo_placeholder"
+          placeholder="Promo Kod (məs: BAKU2026)">
         <button id="applyPromoBtn" data-i18n="cart_apply_btn">Tətbiq Et</button>
       </div>
 
@@ -647,12 +702,40 @@
     </div>
   </aside>
 
+  <!-- Slide-in Favorites Drawer -->
+  <div class="cart-backdrop" id="favBackdrop" onclick="window.closeFavorites()"></div>
+  <aside class="cart-drawer fav-drawer" id="favoritesDrawer">
+    <div class="cart-header">
+      <h3>
+        <i class="fa-solid fa-heart" style="color: #ef4444;"></i>
+        <span data-i18n="fav_drawer_title">Sevimlilər</span>
+        <span class="fav-count-pill" id="favDrawerCount">(0)</span>
+      </h3>
+      <button class="close-btn" onclick="window.closeFavorites()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="cart-items-wrap" id="favItemsList">
+      <!-- Rendered dynamically via js/favorites.js -->
+    </div>
+
+    <div class="cart-footer" id="favFooter" style="display: none;">
+      <button class="btn btn-primary" id="addAllFavsToCartBtn" style="width: 100%; margin-bottom: 0.6rem;">
+        <i class="fa-solid fa-cart-plus"></i> <span data-i18n="fav_add_all_cart">Hamısını Səbətə At</span>
+      </button>
+      <button class="btn btn-secondary btn-sm" onclick="window.clearAllFavorites()" style="width: 100%; color: #ef4444; border-color: rgba(239, 68, 68, 0.3);">
+        <i class="fa-regular fa-trash-can"></i> <span data-i18n="fav_clear_all">Sevimliləri Təmizlə</span>
+      </button>
+    </div>
+  </aside>
+
   <!-- Checkout Modal (Delivery / Cargo order details) -->
   <div class="modal-backdrop" id="checkoutModal">
     <div class="modal-content">
       <div class="modal-header">
-        <h3><i class="fa-solid fa-truck-fast"></i> <span data-i18n="checkout_modal_title">Sifarişin Rəsmiləşdirilməsi</span></h3>
-        <button class="close-btn" onclick="window.closeModal('checkoutModal')"><i class="fa-solid fa-xmark"></i></button>
+        <h3><i class="fa-solid fa-truck-fast"></i> <span data-i18n="checkout_modal_title">Sifarişin
+            Rəsmiləşdirilməsi</span></h3>
+        <button class="close-btn" onclick="window.closeModal('checkoutModal')"><i
+            class="fa-solid fa-xmark"></i></button>
       </div>
 
       <!-- Delivery Type Choices -->
@@ -660,16 +743,20 @@
         <div class="delivery-radio-card active" data-type="delivery">
           <i class="fa-solid fa-motorcycle" style="font-size: 1.3rem;"></i>
           <div>
-            <strong data-i18n="delivery_type_courier" style="font-size: 0.95rem; display: block;">Kuryerlə Çatdırılma</strong>
-            <span data-i18n="delivery_type_courier_sub" style="font-size: 0.75rem; color: var(--color-text-muted);">Qapınıza qədər 30-45 dəq</span>
+            <strong data-i18n="delivery_type_courier" style="font-size: 0.95rem; display: block;">Kuryerlə
+              Çatdırılma</strong>
+            <span data-i18n="delivery_type_courier_sub"
+              style="font-size: 0.75rem; color: var(--color-text-muted);">Qapınıza qədər 30-45 dəq</span>
           </div>
         </div>
 
         <div class="delivery-radio-card" data-type="takeaway">
           <i class="fa-solid fa-bag-shopping" style="font-size: 1.3rem;"></i>
           <div>
-            <strong data-i18n="delivery_type_takeaway" style="font-size: 0.95rem; display: block;">Gəl-Götür (Takeaway)</strong>
-            <span data-i18n="delivery_type_takeaway_sub" style="font-size: 0.75rem; color: var(--color-text-muted);">Restorandan özünüz götürün</span>
+            <strong data-i18n="delivery_type_takeaway" style="font-size: 0.95rem; display: block;">Gəl-Götür
+              (Takeaway)</strong>
+            <span data-i18n="delivery_type_takeaway_sub"
+              style="font-size: 0.75rem; color: var(--color-text-muted);">Restorandan özünüz götürün</span>
           </div>
         </div>
       </div>
@@ -689,7 +776,8 @@
         <div id="deliveryAddressFields">
           <div class="form-group">
             <label class="form-label" for="checkoutAddress" data-i18n="checkout_addr_label">Çatdırılma Ünvanı *</label>
-            <input type="text" id="checkoutAddress" class="form-control" data-i18n-placeholder="checkout_addr_placeholder" placeholder="Küçə, bina, blok, mərtəbə, mənzil">
+            <input type="text" id="checkoutAddress" class="form-control"
+              data-i18n-placeholder="checkout_addr_placeholder" placeholder="Küçə, bina, blok, mərtəbə, mənzil">
           </div>
         </div>
 
@@ -698,31 +786,36 @@
             <label class="form-label" for="checkoutPayment" data-i18n="checkout_payment_label">Ödəniş Üsulu</label>
             <select id="checkoutPayment" class="form-control">
               <option value="Qapıda Nağd" data-i18n="checkout_pay_cash">Qapıda Nağd Ödəniş</option>
-              <option value="Qapıda Kartla (POS Terminal)" data-i18n="checkout_pay_pos">Qapıda Kartla (POS Terminal)</option>
+              <option value="Qapıda Kartla (POS Terminal)" data-i18n="checkout_pay_pos">Qapıda Kartla (POS Terminal)
+              </option>
               <option value="Onlayn Kart (Demo)" data-i18n="checkout_pay_online">Onlayn Kart (Demo)</option>
             </select>
           </div>
 
           <div class="form-group">
             <label class="form-label" for="checkoutNote" data-i18n="checkout_note_label">Kuryer üçün Qeyd</label>
-            <input type="text" id="checkoutNote" class="form-control" data-i18n-placeholder="checkout_note_placeholder" placeholder="Domofon kodu və ya xüsusi təlimat">
+            <input type="text" id="checkoutNote" class="form-control" data-i18n-placeholder="checkout_note_placeholder"
+              placeholder="Domofon kodu və ya xüsusi təlimat">
           </div>
         </div>
 
         <!-- Order Mini Summary Box -->
-        <div id="checkoutOrderReview" style="background: var(--card-subtle-bg); border: 1px solid var(--color-border); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
+        <div id="checkoutOrderReview"
+          style="background: var(--card-subtle-bg); border: 1px solid var(--color-border); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
           <!-- Populated dynamically -->
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 0.8rem;">
           <!-- Primary: WhatsApp Dispatch (Restoranların ən sevdiyi sistem) -->
           <button type="button" id="sendOrderWhatsAppBtn" class="btn btn-whatsapp" style="width: 100%; padding: 1rem;">
-            <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> <span data-i18n="btn_order_wa">WhatsApp ilə Sifariş Göndər (Tövsiyə olunur)</span>
+            <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> <span data-i18n="btn_order_wa">WhatsApp ilə
+              Sifariş Göndər (Tövsiyə olunur)</span>
           </button>
 
           <!-- Secondary: Direct Submit & Live Tracker -->
           <button type="submit" class="btn btn-primary" style="width: 100%;">
-            <i class="fa-solid fa-check"></i> <span data-i18n="btn_order_confirm">Sifarişi Təsdiq Et & Kuryeri İzlə</span>
+            <i class="fa-solid fa-check"></i> <span data-i18n="btn_order_confirm">Sifarişi Təsdiq Et & Kuryeri
+              İzlə</span>
           </button>
         </div>
       </form>
@@ -741,7 +834,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h3><i class="fa-regular fa-calendar-check"></i> <span data-i18n="res_tag">Rezervasiyalarım</span></h3>
-        <button class="close-btn" onclick="window.closeModal('myReservationsModal')"><i class="fa-solid fa-xmark"></i></button>
+        <button class="close-btn" onclick="window.closeModal('myReservationsModal')"><i
+            class="fa-solid fa-xmark"></i></button>
       </div>
       <div id="myReservationsList">
         <!-- Populated dynamically -->
@@ -754,7 +848,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h3 data-i18n="menu_tag">Təam Detalları</h3>
-        <button class="close-btn" onclick="window.closeModal('dishDetailModal')"><i class="fa-solid fa-xmark"></i></button>
+        <button class="close-btn" onclick="window.closeModal('dishDetailModal')"><i
+            class="fa-solid fa-xmark"></i></button>
       </div>
       <div id="dishDetailContent">
         <!-- Populated dynamically -->
@@ -766,14 +861,18 @@
   <div class="modal-backdrop" id="liveTrackerModal">
     <div class="modal-content" style="max-width: 650px;">
       <div class="modal-header">
-        <h3><i class="fa-solid fa-satellite-dish text-gold"></i> <span data-i18n="tracker_title">Canlı Sifariş İzləmə</span></h3>
-        <button class="close-btn" onclick="window.closeModal('liveTrackerModal')"><i class="fa-solid fa-xmark"></i></button>
+        <h3><i class="fa-solid fa-satellite-dish text-gold"></i> <span data-i18n="tracker_title">Canlı Sifariş
+            İzləmə</span></h3>
+        <button class="close-btn" onclick="window.closeModal('liveTrackerModal')"><i
+            class="fa-solid fa-xmark"></i></button>
       </div>
 
-      <div style="background: var(--card-subtle-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1.2rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div
+        style="background: var(--card-subtle-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1.2rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
         <div>
           <span style="font-size: 0.8rem; color: var(--color-text-muted); display: block;">Sifariş Nömrəsi:</span>
-          <strong id="trackerModalOrderId" style="color: var(--color-accent-gold); font-family: monospace; font-size: 1.1rem;">CARGO-1000</strong>
+          <strong id="trackerModalOrderId"
+            style="color: var(--color-accent-gold); font-family: monospace; font-size: 1.1rem;">CARGO-1000</strong>
         </div>
         <div>
           <span style="font-size: 0.8rem; color: var(--color-text-muted); display: block;">Çatdırılma Ünvanı:</span>
@@ -829,7 +928,8 @@
           <a href="#" class="social-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
           <a href="#" class="social-btn" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
           <a href="#" class="social-btn" title="Tripadvisor"><i class="fa-solid fa-plane"></i></a>
-          <a href="https://wa.me/994508904040" target="_blank" class="social-btn" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="https://wa.me/994508904040" target="_blank" class="social-btn" title="WhatsApp"><i
+              class="fa-brands fa-whatsapp"></i></a>
         </div>
       </div>
 
@@ -860,7 +960,8 @@
         <p data-i18n="footer_dev_desc" style="font-size: 0.85rem; margin-bottom: 0.8rem;">
           Restoranınız və ya kafeniz üçün belə bir müasir, backend-siz və GitHub Pages-də çalışan vebsayt istəyirsiniz?
         </p>
-        <a href="https://wa.me/994508904040?text=Salam,%20restoran%20saytı%20hazırlamaq%20üçün%20müraciət%20edirəm" target="_blank" class="btn btn-whatsapp btn-sm" style="width: 100%;">
+        <a href="https://wa.me/994508904040?text=Salam,%20restoran%20saytı%20hazırlamaq%20üçün%20müraciət%20edirəm"
+          target="_blank" class="btn btn-whatsapp btn-sm" style="width: 100%;">
           <i class="fa-brands fa-whatsapp"></i> <span data-i18n="footer_dev_btn">Developer ilə Əlaqə</span>
         </a>
       </div>
@@ -879,4 +980,5 @@
   <!-- Scripts -->
   <script type="module" src="js/app.js"></script>
 </body>
+
 </html>

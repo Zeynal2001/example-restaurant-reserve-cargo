@@ -2,6 +2,7 @@ import { MENU_ITEMS, MENU_CATEGORIES, RESTAURANT_CONFIG, getLocalized } from './
 import { addToCart } from './cart.js';
 import { showToast } from './app.js';
 import { getCurrentLang, TRANSLATIONS } from './i18n.js';
+import { getFavorites, toggleFavorite } from './favorites.js';
 
 let activeCategory = 'all';
 let searchQuery = '';
@@ -61,12 +62,27 @@ export function renderMenuItems() {
       (activeFilter === 'popular' && item.isPopular) ||
       (activeFilter === 'chef' && item.tags?.includes('chef')) ||
       (activeFilter === 'vegetarian' && item.tags?.includes('vegetarian')) ||
-      (activeFilter === 'halal' && item.tags?.includes('halal'));
+      (activeFilter === 'halal' && item.tags?.includes('halal')) ||
+      (activeFilter === 'favorites' && favorites.includes(item.id));
 
     return matchesCategory && matchesSearch && matchesQuickFilter;
   });
 
   if (filtered.length === 0) {
+    if (activeFilter === 'favorites') {
+      container.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 3.5rem 1rem; color: var(--color-text-secondary);">
+          <i class="fa-regular fa-heart" style="font-size: 3.2rem; margin-bottom: 1.2rem; color: #ef4444;"></i>
+          <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-text-primary); margin-bottom: 0.6rem;">${dict.fav_empty_title || "Sevimlilər siyahınız boşdur"}</h3>
+          <p style="font-size: 0.95rem; max-width: 480px; margin: 0 auto 1.5rem;">${dict.fav_empty_sub || "Bəyəndiyiniz təamların üzərindəki ürək ikonuna klikləyərək onları burada toplaya bilərsiniz."}</p>
+          <button class="btn btn-secondary btn-sm" onclick="document.querySelector('.quick-filter-btn[data-filter=\\'all\\']').click()">
+            <i class="fa-solid fa-utensils"></i> ${dict.filter_all || "Bütün Menyu"}
+          </button>
+        </div>
+      `;
+      return;
+    }
+
     const emptyMsg = {
       az: { title: "Axtarışınıza uyğun təam tapılmadı", sub: "Zəhmət olmasa axtarış sözünü dəyişin və ya başqa kateqoriyaya baxın." },
       en: { title: "No culinary items matched your search", sub: "Please try another keyword or browse different categories." },
@@ -96,7 +112,7 @@ export function renderMenuItems() {
         <div class="menu-card-img-wrap" onclick="window.openDishDetail('${item.id}')" style="cursor: pointer;">
           <img src="${item.image}" alt="${name}" loading="lazy">
           ${badge ? `<span class="card-badge">${badge}</span>` : ''}
-          <button class="fav-btn ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); window.toggleFavorite('${item.id}', this)" title="Favorite">
+          <button class="fav-btn ${isFav ? 'active' : ''}" data-dish-id="${item.id}" onclick="event.stopPropagation(); window.toggleFavorite('${item.id}', this)" title="${dict.fav_drawer_title || 'Sevimlilər'}">
             <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
           </button>
         </div>
@@ -162,31 +178,6 @@ window.handleAddToCart = function(id) {
   showToast(toastMsg, "success");
 };
 
-window.toggleFavorite = function(id, btn) {
-  let favs = getFavorites();
-  const lang = getCurrentLang();
-  const icon = btn.querySelector('i');
-  if (favs.includes(id)) {
-    favs = favs.filter(favId => favId !== id);
-    btn.classList.remove('active');
-    icon.className = 'fa-regular fa-heart';
-    showToast(lang === 'ru' ? "Удалено из избранного" : lang === 'en' ? "Removed from favorites" : "Sevimlilərdən çıxarıldı", "info");
-  } else {
-    favs.push(id);
-    btn.classList.add('active');
-    icon.className = 'fa-solid fa-heart';
-    showToast(lang === 'ru' ? "Добавлено в избранное!" : lang === 'en' ? "Added to favorites!" : "Sevimlilərə əlavə olundu!", "success");
-  }
-  localStorage.setItem('aura_favorites', JSON.stringify(favs));
-};
-
-function getFavorites() {
-  try {
-    return JSON.parse(localStorage.getItem('aura_favorites') || '[]');
-  } catch (e) {
-    return [];
-  }
-}
 
 window.openDishDetail = function(id) {
   const item = MENU_ITEMS.find(d => d.id === id);

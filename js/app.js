@@ -1,6 +1,7 @@
 import { initI18n, getCurrentLang } from './i18n.js';
 import { initMenu } from './menu.js';
 import { initCart } from './cart.js';
+import { initFavorites } from './favorites.js';
 import { initReservation } from './reservation.js';
 import { initCheckout } from './checkout.js';
 import { REVIEWS, getLocalized } from './data.js';
@@ -10,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initI18n();
   initMenu();
   initCart();
+  initFavorites();
   initReservation();
   initCheckout();
   renderReviews();
