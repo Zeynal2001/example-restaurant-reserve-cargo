@@ -209,7 +209,7 @@ export const TRANSLATIONS = {
 
     // Developer Banner
     dev_banner_badge: "Developer Portfolio",
-    dev_banner_text: "Showcase website designed for cafes & restaurants (Serverless, WhatsApp & LocalStorage integrated).",
+    dev_banner_text: "Showcase website designed for cafes & restaurants.",
     dev_banner_contact: "Contact for Website Order",
 
     // Hero Section
@@ -401,7 +401,7 @@ export const TRANSLATIONS = {
 
     // Developer Banner
     dev_banner_badge: "Портфолио Разработчика",
-    dev_banner_text: "Пример премиум сайта для ресторанов и кафе (Работает без бэкенда, интеграция с WhatsApp и LocalStorage).",
+    dev_banner_text: "Пример премиум сайта для ресторанов и кафе.",
     dev_banner_contact: "Связаться для заказа сайта",
 
     // Hero Section
