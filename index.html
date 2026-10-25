@@ -161,16 +161,6 @@
 
 <body>
 
-  <!-- Developer Pitch Banner (Perfect for pitching to clients) -->
-  <div class="dev-pitch-banner">
-    <span class="pitch-badge" data-i18n="dev_banner_badge"><i class="fa-solid fa-code"></i> Developer Portfolio</span>
-    <span data-i18n="dev_banner_text">Bu vebsayt restoran və kafelər üçün nümunə kimi hazırlanıb.</span>
-    <a href="https://wa.me/994556548514?text=Salam,%20restoran%20üçün%20vebsayt%20hazırlatmaq%20istəyirəm"
-      target="_blank" style="color: var(--color-accent-gold); text-decoration: underline; font-weight: 700;">
-      <i class="fa-brands fa-whatsapp"></i> <span data-i18n="dev_banner_contact">Sayt Sifarişi Üçün Əlaqə</span>
-    </a>
-  </div>
-
   <!-- Header & Navigation -->
   <header class="site-header">
     <div class="container nav-container">
@@ -190,6 +180,9 @@
         <a href="#cargo" class="nav-link" data-i18n="nav_cargo">Çatdırılma / Karqo</a>
         <a href="#reviews" class="nav-link" data-i18n="nav_reviews">Rəylər</a>
         <a href="#contact" class="nav-link" data-i18n="nav_contact">Əlaqə</a>
+        <a href="#reservation" class="btn btn-primary mobile-menu-res-btn">
+          <i class="fa-regular fa-calendar-check"></i> <span data-i18n="nav_book_table">Masa Rezervi</span>
+        </a>
       </nav>
 
       <div class="header-actions">
@@ -438,8 +431,10 @@
             <span data-i18n="filter_halal">Halal</span></button>
           <button class="cat-btn quick-filter-btn" data-filter="vegetarian"><i class="fa-solid fa-leaf"
               style="color: #10b981;"></i> <span data-i18n="filter_veg">Vegetarian</span></button>
-          <button class="cat-btn quick-filter-btn" data-filter="favorites" id="favQuickFilterBtn"><i class="fa-solid fa-heart"
-              style="color: #ef4444;"></i> <span data-i18n="filter_favorites">Sevimlilər</span> <span class="fav-badge-pill" id="favFilterBadge" style="display: none;">0</span></button>
+          <button class="cat-btn quick-filter-btn" data-filter="favorites" id="favQuickFilterBtn"><i
+              class="fa-solid fa-heart" style="color: #ef4444;"></i> <span
+              data-i18n="filter_favorites">Sevimlilər</span> <span class="fav-badge-pill" id="favFilterBadge"
+              style="display: none;">0</span></button>
         </div>
       </div>
 
@@ -851,7 +846,8 @@
       <button class="btn btn-primary" id="addAllFavsToCartBtn" style="width: 100%; margin-bottom: 0.6rem;">
         <i class="fa-solid fa-cart-plus"></i> <span data-i18n="fav_add_all_cart">Hamısını Səbətə At</span>
       </button>
-      <button class="btn btn-secondary btn-sm" onclick="window.clearAllFavorites()" style="width: 100%; color: #ef4444; border-color: rgba(239, 68, 68, 0.3);">
+      <button class="btn btn-secondary btn-sm" onclick="window.clearAllFavorites()"
+        style="width: 100%; color: #ef4444; border-color: rgba(239, 68, 68, 0.3);">
         <i class="fa-regular fa-trash-can"></i> <span data-i18n="fav_clear_all">Sevimliləri Təmizlə</span>
       </button>
     </div>
@@ -1087,7 +1083,7 @@
       <div class="footer-col">
         <h4 data-i18n="footer_dev_title">Developer & Portfolio</h4>
         <p data-i18n="footer_dev_desc" style="font-size: 0.85rem; margin-bottom: 0.8rem;">
-          Restoranınız və ya kafeniz üçün belə bir müasir, backend-siz və GitHub Pages-də çalışan vebsayt istəyirsiniz?
+          Restoranınız və ya kafeniz üçün belə bir müasir vebsayt istəyirsiniz?
         </p>
         <a href="https://wa.me/994508904040?text=Salam,%20restoran%20saytı%20hazırlamaq%20üçün%20müraciət%20edirəm"
           target="_blank" class="btn btn-whatsapp btn-sm" style="width: 100%;">

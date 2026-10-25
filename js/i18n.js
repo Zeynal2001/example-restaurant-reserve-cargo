@@ -190,7 +190,7 @@ export const TRANSLATIONS = {
     footer_service_4: "Ofisə İsti Nahar Çatdırılması",
     footer_service_5: "Xüsusi Şef Menyusu",
     footer_dev_title: "Developer & Portfolio",
-    footer_dev_desc: "Restoranınız və ya kafeniz üçün belə bir müasir, backend-siz və GitHub Pages-də çalışan vebsayt istəyirsiniz?",
+    footer_dev_desc: "Restoranınız və ya kafeniz üçün belə bir müasir vebsayt istəyirsiniz?",
     footer_dev_btn: "Developer ilə Əlaqə",
     footer_copy: "© 2026 Aura Gourmet & Lounge. Bütün hüquqlar qorunur.",
     footer_creator: "Designed & Built by Professional Web Developer"
@@ -382,7 +382,7 @@ export const TRANSLATIONS = {
     footer_service_4: "Hot Office Luncheon Cargo",
     footer_service_5: "Custom Chef Tasting Menu",
     footer_dev_title: "Developer & Portfolio",
-    footer_dev_desc: "Looking for a high-converting, serverless website for your restaurant or cafe?",
+    footer_dev_desc: "Looking for a high-converting website for your restaurant or cafe?",
     footer_dev_btn: "Contact Web Developer",
     footer_copy: "© 2026 Aura Gourmet & Lounge. All rights reserved.",
     footer_creator: "Designed & Built by Professional Web Developer"
@@ -574,7 +574,7 @@ export const TRANSLATIONS = {
     footer_service_4: "Горячие ланчи в офис",
     footer_service_5: "Авторское дегустационное меню",
     footer_dev_title: "Портфолио разработчика",
-    footer_dev_desc: "Хотите такой же современный, серверлесс сайт для вашего ресторана или кафе?",
+    footer_dev_desc: "Хотите такой же современный сайт для вашего ресторана или кафе?",
     footer_dev_btn: "Связаться с разработчиком",
     footer_copy: "© 2026 Aura Gourmet & Lounge. Все права защищены.",
     footer_creator: "Разработано профессиональным веб-разработчиком"
