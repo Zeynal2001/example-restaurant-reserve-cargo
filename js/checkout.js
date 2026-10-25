@@ -1,6 +1,7 @@
-import { RESTAURANT_CONFIG } from './data.js';
+import { RESTAURANT_CONFIG, getLocalized } from './data.js';
 import { cart, getCartSummary, clearCart, updateCartUI } from './cart.js';
 import { showToast } from './app.js';
+import { getCurrentLang, TRANSLATIONS } from './i18n.js';
 
 let deliveryType = 'delivery'; // 'delivery' or 'takeaway'
 let currentActiveTrackingInterval = null;
@@ -47,8 +48,10 @@ function setupCheckoutForm() {
 
 function processOrder(isWhatsAppDirect) {
   const summary = getCartSummary();
+  const lang = getCurrentLang();
+
   if (cart.length === 0) {
-    showToast("Səbətiniz boşdur!", "error");
+    showToast(lang === 'en' ? "Your cart is empty!" : lang === 'ru' ? "Корзина пуста!" : "Səbətiniz boşdur!", "error");
     return;
   }
 
@@ -59,12 +62,12 @@ function processOrder(isWhatsAppDirect) {
   const payment = document.getElementById('checkoutPayment')?.value;
 
   if (!name || !phone) {
-    showToast("Zəhmət olmasa ad və telefon nömrənizi qeyd edin!", "error");
+    showToast(lang === 'en' ? "Please provide your name and phone number!" : lang === 'ru' ? "Укажите имя и телефон!" : "Zəhmət olmasa ad və telefon nömrənizi qeyd edin!", "error");
     return;
   }
 
   if (deliveryType === 'delivery' && !address) {
-    showToast("Zəhmət olmasa çatdırılma ünvanını daxil edin!", "error");
+    showToast(lang === 'en' ? "Please provide a delivery address!" : lang === 'ru' ? "Укажите адрес доставки!" : "Zəhmət olmasa çatdırılma ünvanını daxil edin!", "error");
     return;
   }
 
@@ -74,36 +77,43 @@ function processOrder(isWhatsAppDirect) {
     name,
     phone,
     deliveryType,
-    address: deliveryType === 'delivery' ? address : 'Restorandan Gəl-Götür',
-    note: note || 'Qeyd yoxdur',
+    address: deliveryType === 'delivery' ? address : (lang === 'en' ? 'Takeaway Pickup' : lang === 'ru' ? 'Самовывоз из ресторана' : 'Restorandan Gəl-Götür'),
+    note: note || (lang === 'en' ? 'None' : lang === 'ru' ? 'Нет' : 'Qeyd yoxdur'),
     paymentMethod: payment || 'Qapıda Nağd',
     items: [...cart],
     summary,
     createdAt: new Date().toISOString(),
-    status: 'Qəbul edildi'
+    status: lang === 'en' ? 'Order Received' : lang === 'ru' ? 'Заказ принят' : 'Qəbul edildi'
   };
 
   saveOrder(orderData);
 
   if (isWhatsAppDirect) {
-    // Construct rich Azerbaijani WhatsApp message
-    let itemsText = cart.map(c => `• ${c.item.name} x ${c.quantity} = ${(c.item.price * c.quantity).toFixed(2)} ${RESTAURANT_CONFIG.currency}`).join('\n');
+    // Construct rich WhatsApp message in current language
+    let itemsText = cart.map(c => {
+      const iName = getLocalized(c.item, 'name', lang);
+      return `• ${iName} x ${c.quantity} = ${(c.item.price * c.quantity).toFixed(2)} ${RESTAURANT_CONFIG.currency}`;
+    }).join('\n');
     
+    const intro = lang === 'en' ? "Hello Aura Gourmet! I'd like to place an order:" :
+                  lang === 'ru' ? "Здравствуйте, Aura Gourmet! Хочу сделать заказ:" :
+                  "Salam Aura Gourmet! Yeni sifariş vermək istəyirəm:";
+
     const message = encodeURIComponent(
-      ` Salam Aura Gourmet! Yeni sifariş vermək istəyirəm:\n\n` +
-      ` Sifariş No: ${orderId}\n` +
-      ` Müştəri: ${name}\n` +
-      ` Telefon: ${phone}\n` +
-      ` Növü: ${deliveryType === 'delivery' ? 'Kuryerlə Çatdırılma' : 'Gəl-Götür'}\n` +
-      (deliveryType === 'delivery' ? ` Ünvan: ${address}\n` : '') +
-      ` Ödəniş: ${payment}\n` +
-      ` Qeyd: ${note || 'Yoxdur'}\n\n` +
-      ` Sifariş Təamları:\n${itemsText}\n\n` +
-      ` Ara Cəm: ${summary.subtotal.toFixed(2)} ${RESTAURANT_CONFIG.currency}\n` +
-      (summary.discount > 0 ? ` Endirim: -${summary.discount.toFixed(2)} ${RESTAURANT_CONFIG.currency}\n` : '') +
-      ` Çatdırılma: ${summary.delivery === 0 ? 'Pulsuz' : summary.delivery.toFixed(2) + ' ' + RESTAURANT_CONFIG.currency}\n` +
-      ` YEKUN MƏBLƏĞ: ${summary.total.toFixed(2)} ${RESTAURANT_CONFIG.currency}\n\n` +
-      `Zəhmət olmasa sifarişi qəbul edib təsdiqləyin!`
+      ` ${intro}\n\n` +
+      ` Order ID: ${orderId}\n` +
+      ` Name: ${name}\n` +
+      ` Phone: ${phone}\n` +
+      ` Type: ${deliveryType === 'delivery' ? 'Courier Delivery' : 'Takeaway Pickup'}\n` +
+      (deliveryType === 'delivery' ? ` Address: ${address}\n` : '') +
+      ` Payment: ${payment}\n` +
+      ` Note: ${note || '-'}\n\n` +
+      ` Items:\n${itemsText}\n\n` +
+      ` Subtotal: ${summary.subtotal.toFixed(2)} ${RESTAURANT_CONFIG.currency}\n` +
+      (summary.discount > 0 ? ` Discount: -${summary.discount.toFixed(2)} ${RESTAURANT_CONFIG.currency}\n` : '') +
+      ` Delivery: ${summary.delivery === 0 ? 'FREE' : summary.delivery.toFixed(2) + ' ' + RESTAURANT_CONFIG.currency}\n` +
+      ` TOTAL: ${summary.total.toFixed(2)} ${RESTAURANT_CONFIG.currency}\n\n` +
+      `Please confirm the order!`
     );
 
     window.open(`https://wa.me/${RESTAURANT_CONFIG.whatsapp}?text=${message}`, '_blank');
@@ -116,7 +126,13 @@ function processOrder(isWhatsAppDirect) {
 
   // Open live tracker simulator
   openLiveTrackerModal(orderData);
-  showToast("Sifarişiniz qəbul edildi və kuryer sisteminə yönləndirildi!", "success");
+  const toastSuccess = {
+    az: "Sifarişiniz qəbul edildi və kuryer sisteminə yönləndirildi!",
+    en: "Order received and dispatched to live courier system!",
+    ru: "Заказ принят и передан в систему курьерской доставки!"
+  }[lang] || "Sifariş qəbul edildi!";
+
+  showToast(toastSuccess, "success");
 }
 
 function saveOrder(order) {
@@ -133,30 +149,39 @@ function saveOrder(order) {
 // Global modal trigger for checkout
 window.openCheckoutModal = function() {
   const summary = getCartSummary();
+  const lang = getCurrentLang();
+
   if (cart.length === 0) {
-    showToast("Zəhmət olmasa əvvəlcə menyudan yemək seçin!", "info");
+    showToast(lang === 'en' ? "Please select dishes from the menu first!" : lang === 'ru' ? "Сначала выберите блюда из меню!" : "Zəhmət olmasa əvvəlcə menyudan yemək seçin!", "info");
     return;
   }
 
   const modal = document.getElementById('checkoutModal');
   const summaryBox = document.getElementById('checkoutOrderReview');
+
+  const reviewLabels = {
+    az: { count: "Məhsul sayı:", subtotal: "Məbləğ:", disc: "Endirim:", del: "Çatdırılma:", free: "Pulsuz", tot: "Yekun:" },
+    en: { count: "Item count:", subtotal: "Subtotal:", disc: "Discount:", del: "Delivery:", free: "Free", tot: "Total:" },
+    ru: { count: "Кол-во блюд:", subtotal: "Сумма:", disc: "Скидка:", del: "Доставка:", free: "Бесплатно", tot: "Итого:" }
+  }[lang] || reviewLabels.az;
+
   if (summaryBox) {
     summaryBox.innerHTML = `
       <div style="font-size: 0.9rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between;">
-        <span>Məhsul sayı:</span> <strong>${summary.itemCount} ədəd</strong>
+        <span>${reviewLabels.count}</span> <strong>${summary.itemCount}</strong>
       </div>
       <div style="font-size: 0.9rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between;">
-        <span>Məbləğ:</span> <strong>${summary.subtotal.toFixed(2)} ${RESTAURANT_CONFIG.currency}</strong>
+        <span>${reviewLabels.subtotal}</span> <strong>${summary.subtotal.toFixed(2)} ${RESTAURANT_CONFIG.currency}</strong>
       </div>
       ${summary.discount > 0 ? `
       <div style="font-size: 0.9rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; color: #10b981;">
-        <span>Endirim:</span> <strong>-${summary.discount.toFixed(2)} ${RESTAURANT_CONFIG.currency}</strong>
+        <span>${reviewLabels.disc}</span> <strong>-${summary.discount.toFixed(2)} ${RESTAURANT_CONFIG.currency}</strong>
       </div>` : ''}
       <div style="font-size: 0.9rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between;">
-        <span>Çatdırılma:</span> <strong>${summary.delivery === 0 ? 'Pulsuz' : summary.delivery.toFixed(2) + ' ' + RESTAURANT_CONFIG.currency}</strong>
+        <span>${reviewLabels.del}</span> <strong>${summary.delivery === 0 ? reviewLabels.free : summary.delivery.toFixed(2) + ' ' + RESTAURANT_CONFIG.currency}</strong>
       </div>
       <div style="font-size: 1.15rem; font-weight: 800; border-top: 1px dashed var(--color-border-subtle); padding-top: 0.5rem; display: flex; justify-content: space-between; color: var(--color-accent-gold);">
-        <span>Yekun:</span> <span>${summary.total.toFixed(2)} ${RESTAURANT_CONFIG.currency}</span>
+        <span>${reviewLabels.tot}</span> <span>${summary.total.toFixed(2)} ${RESTAURANT_CONFIG.currency}</span>
       </div>
     `;
   }
@@ -167,6 +192,7 @@ window.openCheckoutModal = function() {
 export function openLiveTrackerModal(order) {
   const modal = document.getElementById('liveTrackerModal');
   if (!modal) return;
+  const lang = getCurrentLang();
 
   const idBadge = document.getElementById('trackerModalOrderId');
   const addressText = document.getElementById('trackerModalAddress');
@@ -174,7 +200,7 @@ export function openLiveTrackerModal(order) {
 
   if (idBadge) idBadge.textContent = order.id;
   if (addressText) addressText.textContent = order.address;
-  if (etaTimer) etaTimer.textContent = "35 dəq";
+  if (etaTimer) etaTimer.textContent = lang === 'ru' ? "35 мин" : lang === 'en' ? "35 mins" : "35 dəq";
 
   // Reset steps
   updateTrackerSteps(1);
@@ -186,7 +212,6 @@ export function openLiveTrackerModal(order) {
     clearInterval(currentActiveTrackingInterval);
   }
 
-  // Simulate progress through stages
   let stage = 1;
   let remainingMinutes = 35;
 
@@ -195,17 +220,25 @@ export function openLiveTrackerModal(order) {
     remainingMinutes -= 10;
     if (remainingMinutes < 5) remainingMinutes = 5;
 
+    const unit = lang === 'ru' ? 'мин' : lang === 'en' ? 'mins' : 'dəq';
+    const deliveredTxt = lang === 'ru' ? 'Доставлен!' : lang === 'en' ? 'Delivered!' : 'Çatdırıldı!';
+
     if (etaTimer) {
-      etaTimer.textContent = stage >= 4 ? "Çatdırıldı!" : `${remainingMinutes} dəq`;
+      etaTimer.textContent = stage >= 4 ? deliveredTxt : `${remainingMinutes} ${unit}`;
     }
 
     updateTrackerSteps(stage);
 
     if (stage >= 4) {
       clearInterval(currentActiveTrackingInterval);
-      showToast(`Sifariş No: ${order.id} ünvana çatdırıldı. Nuş olsun!`, "success");
+      const doneMsg = {
+        az: `Sifariş No: ${order.id} ünvana çatdırıldı. Nuş olsun!`,
+        en: `Order ${order.id} has been delivered. Bon appétit!`,
+        ru: `Заказ ${order.id} успешно доставлен. Приятного аппетита!`
+      }[lang] || "Sifariş çatdırıldı!";
+      showToast(doneMsg, "success");
     }
-  }, 9000); // changes stage every 9 seconds for demonstration
+  }, 9000);
 }
 
 function updateTrackerSteps(currentStage) {
@@ -232,11 +265,15 @@ function updateTrackerSteps(currentStage) {
 // Order lookup by ID
 window.trackOrderByUserInput = function() {
   const input = document.getElementById('trackOrderInput');
+  const lang = getCurrentLang();
   if (!input) return;
 
   const code = input.value.trim().toUpperCase();
   if (!code) {
-    showToast("Zəhmət olmasa Sifariş Nömrəsini daxil edin (məs: CARGO-1024)", "info");
+    const prompt = lang === 'en' ? "Please enter an Order ID (e.g. CARGO-1024)" :
+                   lang === 'ru' ? "Пожалуйста, введите номер заказа (напр. CARGO-1024)" :
+                   "Zəhmət olmasa Sifariş Nömrəsini daxil edin (məs: CARGO-1024)";
+    showToast(prompt, "info");
     return;
   }
 
@@ -254,11 +291,11 @@ window.trackOrderByUserInput = function() {
     // Generate simulated order for demo showcase
     const demoOrder = {
       id: code,
-      address: "Nəsimi r., 28 May küçəsi 14",
+      address: lang === 'ru' ? "г. Баку, ул. 28 Мая 14" : lang === 'en' ? "14 May 28th Street, Baku" : "Nəsimi r., 28 May küçəsi 14",
       items: [],
       summary: { total: 42.00 }
     };
     openLiveTrackerModal(demoOrder);
-    showToast("Demo sifariş izləmə rejimi aktivləşdirildi", "info");
+    showToast(lang === 'ru' ? "Демо режим отслеживания включен" : lang === 'en' ? "Demo order tracking mode active" : "Demo sifariş izləmə rejimi aktivləşdirildi", "info");
   }
 };

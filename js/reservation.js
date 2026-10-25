@@ -1,5 +1,6 @@
-import { TABLE_ZONES, TIME_SLOTS, RESTAURANT_CONFIG } from './data.js';
+import { TABLE_ZONES, TIME_SLOTS, RESTAURANT_CONFIG, getLocalized } from './data.js';
 import { showToast } from './app.js';
+import { getCurrentLang, TRANSLATIONS } from './i18n.js';
 
 let selectedZone = TABLE_ZONES[0].id;
 let selectedTime = TIME_SLOTS[4]; // 18:00 default
@@ -9,21 +10,30 @@ export function initReservation() {
   renderTimeSlots();
   setupDateInput();
   setupReservationForm();
+
+  window.addEventListener('languageChanged', () => {
+    renderZoneChips();
+  });
 }
 
 function renderZoneChips() {
   const container = document.getElementById('zoneChipsContainer');
   if (!container) return;
+  const lang = getCurrentLang();
 
-  container.innerHTML = TABLE_ZONES.map(zone => `
-    <div class="zone-chip ${zone.id === selectedZone ? 'selected' : ''}" data-zone="${zone.id}">
-      <i class="fa-solid ${zone.icon}"></i>
-      <div class="zone-chip-info">
-        <h5>${zone.name}</h5>
-        <p>${zone.desc}</p>
+  container.innerHTML = TABLE_ZONES.map(zone => {
+    const name = getLocalized(zone, 'name', lang);
+    const desc = getLocalized(zone, 'desc', lang);
+    return `
+      <div class="zone-chip ${zone.id === selectedZone ? 'selected' : ''}" data-zone="${zone.id}">
+        <i class="fa-solid ${zone.icon}"></i>
+        <div class="zone-chip-info">
+          <h5>${name}</h5>
+          <p>${desc}</p>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 
   container.querySelectorAll('.zone-chip').forEach(chip => {
     chip.addEventListener('click', () => {
@@ -47,10 +57,11 @@ function setupDateInput() {
   const dateInput = document.getElementById('resDate');
   if (!dateInput) return;
 
-  // Set min date to today in YYYY-MM-DD
   const today = new Date().toISOString().split('T')[0];
   dateInput.min = today;
-  dateInput.value = today;
+  if (!dateInput.value) {
+    dateInput.value = today;
+  }
 }
 
 function setupReservationForm() {
@@ -59,6 +70,7 @@ function setupReservationForm() {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    const lang = getCurrentLang();
 
     const name = document.getElementById('resName')?.value.trim();
     const phone = document.getElementById('resPhone')?.value.trim();
@@ -70,7 +82,12 @@ function setupReservationForm() {
     const notes = document.getElementById('resNotes')?.value.trim();
 
     if (!name || !phone || !date || !time) {
-      showToast("Zəhmət olmasa tələb olunan sahələri doldurun!", "error");
+      const err = {
+        az: "Zəhmət olmasa tələb olunan sahələri doldurun!",
+        en: "Please fill in all required fields!",
+        ru: "Пожалуйста, заполните обязательные поля!"
+      }[lang] || "Zəhmət olmasa sahələri doldurun!";
+      showToast(err, "error");
       return;
     }
 
@@ -81,22 +98,29 @@ function setupReservationForm() {
       code: reservationCode,
       name,
       phone,
-      email: email || "Qeyd edilməyib",
+      email: email || (lang === 'en' ? "Not provided" : lang === 'ru' ? "Не указан" : "Qeyd edilməyib"),
       date,
       time,
       guests: guests || "2 nəfər",
-      zone: zoneObj.name,
+      zone: getLocalized(zoneObj, 'name', lang),
       occasion: occasion || "Standart Görüş",
-      notes: notes || "Xüsusi qeyd yoxdur",
+      notes: notes || (lang === 'en' ? "None" : lang === 'ru' ? "Нет" : "Xüsusi qeyd yoxdur"),
       createdAt: new Date().toISOString(),
-      status: "Təsdiqləndi"
+      status: lang === 'en' ? "Confirmed" : lang === 'ru' ? "Подтверждено" : "Təsdiqləndi"
     };
 
     saveReservation(reservation);
     showReservationSuccessModal(reservation);
     form.reset();
     setupDateInput();
-    showToast("Masanız uğurla rezerv edildi!", "success");
+
+    const successMsg = {
+      az: "Masanız uğurla rezerv edildi!",
+      en: "Your table has been successfully reserved!",
+      ru: "Ваш столик успешно забронирован!"
+    }[lang] || "Rezervasiya təsdiqləndi!";
+
+    showToast(successMsg, "success");
   });
 }
 
@@ -115,15 +139,51 @@ function showReservationSuccessModal(res) {
   const modal = document.getElementById('resSuccessModal');
   const content = document.getElementById('resSuccessContent');
   if (!modal || !content) return;
+  const lang = getCurrentLang();
+
+  const labels = {
+    az: {
+      title: "Rezervasiyanız Təsdiqləndi!",
+      sub: "Sizi restoranımızda salamlamaqdan məmnun olarıq.",
+      code: "Rezervasiya Kodu:",
+      guest: "Qonaq:",
+      datetime: "Tarix & Saat:",
+      count: "Qonaq Sayı:",
+      zone: "Seçilmiş Masa:",
+      wa: "WhatsApp-a Təsdiq Göndər",
+      close: "Bağla"
+    },
+    en: {
+      title: "Table Booking Confirmed!",
+      sub: "We look forward to welcoming you to Aura Gourmet.",
+      code: "Booking Code:",
+      guest: "Guest:",
+      datetime: "Date & Time:",
+      count: "Party Size:",
+      zone: "Dining Zone:",
+      wa: "Send WhatsApp Confirmation",
+      close: "Close"
+    },
+    ru: {
+      title: "Бронирование подтверждено!",
+      sub: "Будем рады приветствовать вас в нашем ресторане.",
+      code: "Код брони:",
+      guest: "Гость:",
+      datetime: "Дата и время:",
+      count: "Количество гостей:",
+      zone: "Выбранная зона:",
+      wa: "Подтвердить в WhatsApp",
+      close: "Закрыть"
+    }
+  }[lang] || labels.az;
 
   const waMessage = encodeURIComponent(
-    `Salam Aura Gourmet! Mən masa rezervasiyası etmişəm:\n` +
-    `• Rezerv Kodu: ${res.code}\n` +
-    `• Ad: ${res.name}\n` +
-    `• Tarix və Saat: ${res.date} saat ${res.time}\n` +
-    `• Qonaq sayı: ${res.guests}\n` +
-    `• Zona: ${res.zone}\n` +
-    `• Qeyd: ${res.occasion}`
+    `Salam Aura Gourmet!\n` +
+    `• ${labels.code} ${res.code}\n` +
+    `• ${labels.guest} ${res.name}\n` +
+    `• ${labels.datetime} ${res.date} • ${res.time}\n` +
+    `• ${labels.count} ${res.guests}\n` +
+    `• ${labels.zone} ${res.zone}`
   );
 
   content.innerHTML = `
@@ -131,39 +191,39 @@ function showReservationSuccessModal(res) {
       <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(16,185,129,0.15); color: #10b981; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1rem;">
         <i class="fa-solid fa-check"></i>
       </div>
-      <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: #fff;">Rezervasiyanız Təsdiqləndi!</h3>
-      <p style="color: var(--color-text-secondary); font-size: 0.9rem;">Sizi restoranımızda salamlamaqdan məmnun olarıq.</p>
+      <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-text-primary);">${labels.title}</h3>
+      <p style="color: var(--color-text-secondary); font-size: 0.9rem;">${labels.sub}</p>
     </div>
 
-    <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1.2rem; margin-bottom: 1.5rem;">
+    <div style="background: var(--card-subtle-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1.2rem; margin-bottom: 1.5rem;">
       <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.75rem; border-bottom: 1px dashed var(--color-border-subtle); margin-bottom: 0.75rem;">
-        <span style="color: var(--color-text-muted); font-size: 0.85rem;">Rezervasiya Kodu:</span>
-        <strong style="color: var(--color-accent-gold); font-size: 1.1rem; font-family: monospace;">${res.code}</strong>
+        <span style="color: var(--color-text-muted); font-size: 0.85rem;">${labels.code}</span>
+        <strong style="color: var(--color-accent-gold); font-size: 1.15rem; font-family: monospace;">${res.code}</strong>
       </div>
       <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
-        <span style="color: var(--color-text-secondary);"><i class="fa-regular fa-user text-gold"></i> Qonaq:</span>
+        <span style="color: var(--color-text-secondary);"><i class="fa-regular fa-user text-gold"></i> ${labels.guest}</span>
         <strong>${res.name}</strong>
       </div>
       <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
-        <span style="color: var(--color-text-secondary);"><i class="fa-regular fa-calendar text-gold"></i> Tarix & Saat:</span>
+        <span style="color: var(--color-text-secondary);"><i class="fa-regular fa-calendar text-gold"></i> ${labels.datetime}</span>
         <strong>${res.date} • ${res.time}</strong>
       </div>
       <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
-        <span style="color: var(--color-text-secondary);"><i class="fa-solid fa-users text-gold"></i> Qonaq Sayı:</span>
+        <span style="color: var(--color-text-secondary);"><i class="fa-solid fa-users text-gold"></i> ${labels.count}</span>
         <strong>${res.guests}</strong>
       </div>
       <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
-        <span style="color: var(--color-text-secondary);"><i class="fa-solid fa-chair text-gold"></i> Seçilmiş Masa:</span>
+        <span style="color: var(--color-text-secondary);"><i class="fa-solid fa-chair text-gold"></i> ${labels.zone}</span>
         <strong style="color: var(--color-accent-gold);">${res.zone}</strong>
       </div>
     </div>
 
     <div style="display: flex; flex-direction: column; gap: 0.75rem;">
       <a href="https://wa.me/${RESTAURANT_CONFIG.whatsapp}?text=${waMessage}" target="_blank" class="btn btn-whatsapp" style="width: 100%;">
-        <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> WhatsApp-a Təsdiq Göndər
+        <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> ${labels.wa}
       </a>
       <button class="btn btn-secondary" onclick="window.closeModal('resSuccessModal')">
-        Bağla
+        ${labels.close}
       </button>
     </div>
   `;
@@ -184,6 +244,7 @@ window.openMyReservationsModal = function() {
 export function renderUserReservations() {
   const container = document.getElementById('myReservationsList');
   if (!container) return;
+  const lang = getCurrentLang();
 
   let list = [];
   try {
@@ -193,31 +254,37 @@ export function renderUserReservations() {
   }
 
   if (list.length === 0) {
+    const emptyLabels = {
+      az: { title: "Aktiv rezervasiyanız yoxdur", sub: "Siz dərhal onlayn formada masa rezerv edə bilərsiniz." },
+      en: { title: "No active reservations found", sub: "You can easily book a table anytime using our booking form." },
+      ru: { title: "Нет активных броней", sub: "Вы можете забронировать столик в удобное время через онлайн-форму." }
+    }[lang] || { title: "Aktiv rezerv yoxdur", sub: "Masa rezerv edin." };
+
     container.innerHTML = `
-      <div style="text-align: center; padding: 2rem; color: var(--color-text-secondary);">
+      <div style="text-align: center; padding: 2.5rem 1rem; color: var(--color-text-secondary);">
         <i class="fa-regular fa-calendar-xmark" style="font-size: 3rem; color: var(--color-text-muted); margin-bottom: 1rem;"></i>
-        <h4>Aktiv rezervasiyanız yoxdur</h4>
-        <p style="font-size: 0.85rem; margin-top: 0.5rem;">Siz dərhal onlayn formada masa rezerv edə bilərsiniz.</p>
+        <h4 style="color: var(--color-text-primary); font-size: 1.2rem;">${emptyLabels.title}</h4>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">${emptyLabels.sub}</p>
       </div>
     `;
     return;
   }
 
   container.innerHTML = list.map(item => `
-    <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1.2rem; margin-bottom: 1rem;">
+    <div style="background: var(--card-subtle-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1.2rem; margin-bottom: 1rem;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
-        <span style="font-family: monospace; font-weight: 700; color: var(--color-accent-gold);">${item.code}</span>
-        <span style="background: rgba(16,185,129,0.15); color: #10b981; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: var(--radius-full);">
+        <span style="font-family: monospace; font-weight: 700; color: var(--color-accent-gold); font-size: 1rem;">${item.code}</span>
+        <span style="background: rgba(16,185,129,0.15); color: #10b981; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: var(--radius-full);">
           ${item.status}
         </span>
       </div>
-      <p style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem;">${item.name} (${item.guests})</p>
+      <p style="font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem;">${item.name} (${item.guests})</p>
       <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin-bottom: 0.8rem;">
         <i class="fa-regular fa-calendar text-gold"></i> ${item.date} • ${item.time} | <strong>${item.zone}</strong>
       </p>
       <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
         <button class="btn btn-secondary btn-sm" onclick="window.cancelReservation('${item.code}')" style="color: #ef4444; border-color: rgba(239,68,68,0.3);">
-          <i class="fa-solid fa-xmark"></i> Ləğv Et
+          <i class="fa-solid fa-xmark"></i> ${lang === 'en' ? 'Cancel' : lang === 'ru' ? 'Отменить' : 'Ləğv Et'}
         </button>
       </div>
     </div>
@@ -225,11 +292,18 @@ export function renderUserReservations() {
 }
 
 window.cancelReservation = function(code) {
-  if (!confirm(`Həqiqətən ${code} nömrəli rezervasiyanı ləğv etmək istəyirsiniz?`)) return;
+  const lang = getCurrentLang();
+  const promptText = {
+    az: `Həqiqətən ${code} nömrəli rezervasiyanı ləğv etmək istəyirsiniz?`,
+    en: `Are you sure you want to cancel reservation ${code}?`,
+    ru: `Вы действительно хотите отменить бронь ${code}?`
+  }[lang] || `Cancel ${code}?`;
+
+  if (!confirm(promptText)) return;
 
   let list = JSON.parse(localStorage.getItem('aura_reservations') || '[]');
   list = list.filter(r => r.code !== code);
   localStorage.setItem('aura_reservations', JSON.stringify(list));
   renderUserReservations();
-  showToast("Rezervasiya ləğv edildi", "info");
+  showToast(lang === 'ru' ? "Бронь отменена" : lang === 'en' ? "Reservation cancelled" : "Rezervasiya ləğv edildi", "info");
 };

@@ -353,6 +353,29 @@ button {
   color: var(--color-accent-gold);
 }
 
+/* Theme Toggle Button */
+.theme-toggle-btn {
+  position: relative;
+  background: var(--input-bg);
+  border: 1px solid var(--color-border);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  color: var(--color-accent-gold);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(229, 179, 105, 0.2);
+  transform: rotate(20deg) scale(1.08);
+  border-color: var(--color-accent-gold);
+}
+
 /* Cart Trigger */
 .cart-trigger-btn {
   position: relative;
@@ -1982,27 +2005,158 @@ button {
 }
 
 /* ==========================================================================
-   Responsive Breakpoints
+   Light Theme Explicit Overrides
    ========================================================================== */
-@media (max-width: 992px) {
-  .hero-grid,
+[data-theme="light"] body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(179, 130, 52, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 85% 65%, rgba(179, 130, 52, 0.03) 0%, transparent 45%);
+}
+
+[data-theme="light"] .hero-bg {
+  background-image: 
+    linear-gradient(to right, rgba(252, 250, 247, 0.96) 20%, rgba(252, 250, 247, 0.85) 60%, rgba(252, 250, 247, 0.94) 100%),
+    url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=80');
+}
+
+[data-theme="light"] .text-gradient-gold {
+  background: linear-gradient(135deg, #b38234 0%, #8c6239 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .site-header.scrolled {
+  background: rgba(252, 250, 247, 0.94);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+  border-bottom-color: rgba(179, 130, 52, 0.2);
+}
+
+[data-theme="light"] .menu-card,
+[data-theme="light"] .hero-card,
+[data-theme="light"] .res-info-card,
+[data-theme="light"] .reservation-form-wrap,
+[data-theme="light"] .cargo-step-card,
+[data-theme="light"] .cargo-live-simulator,
+[data-theme="light"] .review-card,
+[data-theme="light"] .contact-info-card,
+[data-theme="light"] .modal-content,
+[data-theme="light"] .cart-drawer {
+  background: var(--color-bg-card);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .form-control,
+[data-theme="light"] .menu-search-box input,
+[data-theme="light"] .promo-row input {
+  background: var(--input-bg);
+  border-color: var(--input-border);
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .form-control:focus,
+[data-theme="light"] .menu-search-box input:focus {
+  background: #ffffff;
+  border-color: var(--color-accent-gold);
+  box-shadow: 0 0 0 3px rgba(179, 130, 52, 0.15);
+}
+
+[data-theme="light"] .cat-btn {
+  background: #ffffff;
+  border-color: var(--color-border-subtle);
+  color: var(--color-text-secondary);
+}
+
+[data-theme="light"] .cat-btn.active {
+  background: var(--color-accent-gold);
+  color: #ffffff;
+}
+
+[data-theme="light"] .btn-secondary {
+  background: rgba(179, 130, 52, 0.08);
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  background: var(--color-accent-gold);
+  color: #ffffff;
+}
+
+[data-theme="light"] .cart-footer {
+  background: #f7f3ec;
+  border-top-color: var(--color-border);
+}
+
+[data-theme="light"] .cart-item {
+  background: #ffffff;
+  border-color: var(--color-border-subtle);
+}
+
+[data-theme="light"] .map-card iframe {
+  filter: none;
+}
+
+[data-theme="light"] .lang-btn,
+[data-theme="light"] .theme-toggle-btn {
+  background: #ffffff;
+  border-color: var(--color-border);
+}
+
+[data-theme="light"] .lang-dropdown {
+  background: #ffffff;
+  border-color: var(--color-border);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .site-footer {
+  background: #11141a;
+  color: #f8fafc;
+}
+
+[data-theme="light"] .dev-pitch-banner {
+  background: linear-gradient(90deg, #2a2250, #421a48, #2a2250);
+}
+
+/* ==========================================================================
+   Responsive Breakpoints (Mobile, Tablet, Desktop)
+   ========================================================================== */
+
+/* Tablet & Smaller Laptops (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .hero-card {
+    max-width: 520px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
   .reservation-grid,
   .about-grid,
   .contact-grid {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 3rem;
   }
 
   .info-strip-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
   }
 
   .cargo-process-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
 
   .footer-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
   }
 
   .tracking-stepper {
@@ -2011,43 +2165,123 @@ button {
   }
 }
 
+/* Mobile & Small Tablets (max-width: 768px) */
 @media (max-width: 768px) {
+  .section {
+    padding: 4.5rem 0;
+  }
+
   .mobile-toggle {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .desktop-only-btn {
+    display: none !important;
   }
 
   .nav-links {
     position: fixed;
-    top: 70px;
+    top: 65px;
     left: 0;
     right: 0;
     background: var(--color-bg-secondary);
     border-bottom: 1px solid var(--color-border);
     flex-direction: column;
-    padding: 2rem;
-    gap: 1.2rem;
+    padding: 1.75rem 2rem;
+    gap: 1.1rem;
     transform: translateY(-120%);
     opacity: 0;
+    pointer-events: none;
     transition: var(--transition-smooth);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    z-index: 999;
   }
 
   .nav-links.open {
     transform: translateY(0);
     opacity: 1;
+    pointer-events: auto;
   }
 
-  .info-strip-grid,
-  .cargo-process-grid,
-  .footer-grid,
+  .hero-title {
+    font-size: clamp(2rem, 7vw, 2.8rem);
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+  }
+
+  .category-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+    padding-bottom: 0.75rem;
+    width: 100%;
+    scrollbar-width: none;
+  }
+
+  .category-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cat-btn {
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    padding: 0.55rem 1.1rem;
+  }
+
+  .quick-filters-row {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
+  }
+
+  .quick-filters-row::-webkit-scrollbar {
+    display: none;
+  }
+
   .form-group-grid,
-  .zone-selector {
+  .zone-selector,
+  .delivery-options-grid {
     grid-template-columns: 1fr;
   }
 
-  .hero-stats {
+  .info-strip-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+
+  .cargo-process-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .tracking-stepper {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .cart-drawer {
+    max-width: 100%;
+  }
+
+  .modal-content {
+    padding: 1.5rem 1.2rem;
+    max-width: 95vw;
   }
 
   .about-img-sub {
@@ -2056,10 +2290,56 @@ button {
 
   .about-img-main {
     width: 100%;
-    height: 320px;
+    height: 300px;
   }
 
-  .cart-drawer {
-    max-width: 100%;
+  .dev-pitch-banner {
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.6rem;
   }
 }
+
+/* Small Smartphone Screen (max-width: 480px) */
+@media (max-width: 480px) {
+  .hero-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .stat-item h4 {
+    font-size: 1.35rem;
+  }
+
+  .stat-item p {
+    font-size: 0.72rem;
+  }
+
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .menu-card-img-wrap {
+    height: 180px;
+  }
+
+  .res-info-card,
+  .reservation-form-wrap,
+  .cargo-live-simulator,
+  .contact-info-card {
+    padding: 1.5rem 1rem;
+  }
+}
+

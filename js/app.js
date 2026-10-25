@@ -1,11 +1,12 @@
-import { initI18n } from './i18n.js';
+import { initI18n, getCurrentLang } from './i18n.js';
 import { initMenu } from './menu.js';
 import { initCart } from './cart.js';
 import { initReservation } from './reservation.js';
 import { initCheckout } from './checkout.js';
-import { REVIEWS } from './data.js';
+import { REVIEWS, getLocalized } from './data.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
   initI18n();
   initMenu();
   initCart();
@@ -14,8 +15,55 @@ document.addEventListener('DOMContentLoaded', () => {
   renderReviews();
   setupNavigation();
   setupModals();
+
+  window.addEventListener('languageChanged', () => {
+    renderReviews();
+  });
 });
 
+/* ==========================================================================
+   Theme (Light / Dark Mode) Engine
+   ========================================================================== */
+function initTheme() {
+  const savedTheme = localStorage.getItem('aura_theme');
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initialTheme = savedTheme || (prefersDark ? 'dark' : 'dark'); // Default luxury dark
+  
+  applyTheme(initialTheme);
+
+  const themeBtn = document.getElementById('themeToggleBtn');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const nextTheme = current === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme);
+      showToast(nextTheme === 'light' ? 'İşıqlı rejim aktiv edildi' : 'Qaranlıq rejim aktiv edildi', 'info');
+    });
+  }
+}
+
+export function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('aura_theme', theme);
+
+  const themeBtn = document.getElementById('themeToggleBtn');
+  if (themeBtn) {
+    const icon = themeBtn.querySelector('i');
+    if (icon) {
+      if (theme === 'light') {
+        icon.className = 'fa-solid fa-moon';
+        themeBtn.setAttribute('title', 'Qaranlıq rejimə keç');
+      } else {
+        icon.className = 'fa-solid fa-sun';
+        themeBtn.setAttribute('title', 'İşıqlı rejimə keç');
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
 function setupNavigation() {
   const header = document.querySelector('.site-header');
   const mobileToggle = document.getElementById('mobileNavToggle');
@@ -53,25 +101,32 @@ function setupNavigation() {
 function renderReviews() {
   const container = document.getElementById('reviewsGrid');
   if (!container) return;
+  const lang = getCurrentLang();
 
-  container.innerHTML = REVIEWS.map(r => `
-    <div class="review-card">
-      <div class="review-header">
-        <div class="stars">
-          ${Array(r.rating).fill('<i class="fa-solid fa-star"></i>').join('')}
+  container.innerHTML = REVIEWS.map(r => {
+    const role = getLocalized(r, 'role', lang);
+    const date = getLocalized(r, 'date', lang);
+    const text = getLocalized(r, 'text', lang);
+
+    return `
+      <div class="review-card">
+        <div class="review-header">
+          <div class="stars">
+            ${Array(r.rating).fill('<i class="fa-solid fa-star"></i>').join('')}
+          </div>
+          <span class="review-date">${date}</span>
         </div>
-        <span class="review-date">${r.date}</span>
-      </div>
-      <p class="review-text">"${r.text}"</p>
-      <div class="review-author">
-        <img src="${r.avatar}" alt="${r.name}" class="author-avatar">
-        <div class="author-name">
-          <h5>${r.name}</h5>
-          <p>${r.role}</p>
+        <p class="review-text">"${text}"</p>
+        <div class="review-author">
+          <img src="${r.avatar}" alt="${r.name}" class="author-avatar">
+          <div class="author-name">
+            <h5>${r.name}</h5>
+            <p>${role}</p>
+          </div>
         </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
 function setupModals() {

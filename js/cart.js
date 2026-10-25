@@ -1,5 +1,6 @@
-import { RESTAURANT_CONFIG, PROMO_CODES } from './data.js';
+import { RESTAURANT_CONFIG, PROMO_CODES, getLocalized } from './data.js';
 import { showToast } from './app.js';
+import { getCurrentLang, TRANSLATIONS } from './i18n.js';
 
 let cart = [];
 let appliedPromo = null;
@@ -8,6 +9,10 @@ export function initCart() {
   loadCartFromStorage();
   updateCartUI();
   setupCartEvents();
+
+  window.addEventListener('languageChanged', () => {
+    updateCartUI();
+  });
 }
 
 function loadCartFromStorage() {
@@ -43,11 +48,12 @@ export function addToCart(item, qty = 1) {
 export function updateQuantity(itemId, delta) {
   const entryIndex = cart.findIndex(entry => entry.item.id === itemId);
   if (entryIndex === -1) return;
+  const lang = getCurrentLang();
 
   cart[entryIndex].quantity += delta;
   if (cart[entryIndex].quantity <= 0) {
     cart.splice(entryIndex, 1);
-    showToast("Məhsul səbətdən silindi", "info");
+    showToast(lang === 'en' ? "Item removed from cart" : lang === 'ru' ? "Блюдо удалено из корзины" : "Məhsul səbətdən silindi", "info");
   }
 
   saveCartToStorage();
@@ -55,10 +61,11 @@ export function updateQuantity(itemId, delta) {
 }
 
 export function removeFromCart(itemId) {
+  const lang = getCurrentLang();
   cart = cart.filter(entry => entry.item.id !== itemId);
   saveCartToStorage();
   updateCartUI();
-  showToast("Məhsul səbətdən çıxarıldı", "info");
+  showToast(lang === 'en' ? "Item removed" : lang === 'ru' ? "Блюдо удалено" : "Məhsul səbətdən çıxarıldı", "info");
 }
 
 export function clearCart() {
@@ -95,6 +102,8 @@ export function getCartSummary() {
 
 export function updateCartUI() {
   const summary = getCartSummary();
+  const lang = getCurrentLang();
+  const dict = TRANSLATIONS[lang] || TRANSLATIONS['az'];
 
   // Update header counters
   document.querySelectorAll('.cart-count').forEach(el => {
@@ -110,43 +119,46 @@ export function updateCartUI() {
     container.innerHTML = `
       <div class="cart-empty-state">
         <i class="fa-solid fa-basket-shopping"></i>
-        <h4>Səbətiniz boşdur</h4>
-        <p>Aura Gourmet menyusundan sevimli təamları seçib sifariş edə bilərsiniz.</p>
+        <h4>${dict.cart_empty_title}</h4>
+        <p>${dict.cart_empty_sub}</p>
         <button class="btn btn-secondary btn-sm" onclick="window.closeCart(); window.location.hash='#menu';">
-          Menyuya Bax
+          ${dict.cart_view_menu}
         </button>
       </div>
     `;
-    renderCartTotals(summary);
+    renderCartTotals(summary, dict);
     return;
   }
 
-  container.innerHTML = cart.map(entry => `
-    <div class="cart-item">
-      <img src="${entry.item.image}" alt="${entry.item.name}" class="cart-item-img">
-      <div class="cart-item-details">
-        <h4 class="cart-item-name">${entry.item.name}</h4>
-        <span class="cart-item-price">${(entry.item.price * entry.quantity).toFixed(2)} ${RESTAURANT_CONFIG.currency}</span>
-        <div class="cart-item-qty">
-          <button class="qty-btn" onclick="window.changeCartQty('${entry.item.id}', -1)">
-            <i class="fa-solid fa-minus"></i>
-          </button>
-          <span class="qty-count">${entry.quantity}</span>
-          <button class="qty-btn" onclick="window.changeCartQty('${entry.item.id}', 1)">
-            <i class="fa-solid fa-plus"></i>
-          </button>
+  container.innerHTML = cart.map(entry => {
+    const itemName = getLocalized(entry.item, 'name', lang);
+    return `
+      <div class="cart-item">
+        <img src="${entry.item.image}" alt="${itemName}" class="cart-item-img">
+        <div class="cart-item-details">
+          <h4 class="cart-item-name">${itemName}</h4>
+          <span class="cart-item-price">${(entry.item.price * entry.quantity).toFixed(2)} ${RESTAURANT_CONFIG.currency}</span>
+          <div class="cart-item-qty">
+            <button class="qty-btn" onclick="window.changeCartQty('${entry.item.id}', -1)">
+              <i class="fa-solid fa-minus"></i>
+            </button>
+            <span class="qty-count">${entry.quantity}</span>
+            <button class="qty-btn" onclick="window.changeCartQty('${entry.item.id}', 1)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
         </div>
+        <button class="remove-cart-item" onclick="window.removeCartItem('${entry.item.id}')" title="Sil">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
       </div>
-      <button class="remove-cart-item" onclick="window.removeCartItem('${entry.item.id}')" title="Sil">
-        <i class="fa-solid fa-trash-can"></i>
-      </button>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 
-  renderCartTotals(summary);
+  renderCartTotals(summary, dict);
 }
 
-function renderCartTotals(summary) {
+function renderCartTotals(summary, dict) {
   const subtotalEl = document.getElementById('cartSubtotal');
   const deliveryEl = document.getElementById('cartDelivery');
   const discountRow = document.getElementById('cartDiscountRow');
@@ -159,7 +171,7 @@ function renderCartTotals(summary) {
     if (summary.subtotal === 0) {
       deliveryEl.textContent = `0.00 ${RESTAURANT_CONFIG.currency}`;
     } else if (summary.delivery === 0) {
-      deliveryEl.innerHTML = `<span style="color: #10b981; font-weight: 700;">Pulsuz</span>`;
+      deliveryEl.innerHTML = `<span style="color: #10b981; font-weight: 700;">${dict.cart_free || 'Pulsuz'}</span>`;
     } else {
       deliveryEl.textContent = `${summary.delivery.toFixed(2)} ${RESTAURANT_CONFIG.currency}`;
     }
@@ -189,16 +201,18 @@ function setupCartEvents() {
   if (promoBtn && promoInput) {
     promoBtn.addEventListener('click', () => {
       const code = promoInput.value.trim().toUpperCase();
+      const lang = getCurrentLang();
       if (!code) return;
 
       if (PROMO_CODES[code]) {
         appliedPromo = { code, ...PROMO_CODES[code] };
         saveCartToStorage();
         updateCartUI();
-        showToast(`Promo kod tətbiq olundu: ${appliedPromo.label}`, "success");
+        const label = getLocalized(appliedPromo, 'label', lang);
+        showToast(lang === 'en' ? `Promo applied: ${label}` : lang === 'ru' ? `Промокод применен: ${label}` : `Promo kod tətbiq olundu: ${label}`, "success");
         promoInput.value = '';
       } else {
-        showToast("Yanlış və ya vaxtı bitmiş promo kod!", "error");
+        showToast(lang === 'en' ? "Invalid or expired promo code!" : lang === 'ru' ? "Неверный или устаревший промокод!" : "Yanlış və ya vaxtı bitmiş promo kod!", "error");
       }
     });
   }
