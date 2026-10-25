@@ -14,6 +14,16 @@ html {
   color-scheme: dark;
 }
 
+html[data-theme="light"],
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+html[data-theme="dark"],
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
 body {
   font-family: var(--font-sans);
   background-color: var(--color-bg-primary);
@@ -1050,7 +1060,7 @@ button {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-md);
-  color: #fff;
+  color: var(--color-text-primary);
   font-size: 0.95rem;
   transition: var(--transition-smooth);
 }
@@ -1059,6 +1069,35 @@ button {
   border-color: var(--color-accent-gold);
   background: rgba(229, 179, 105, 0.06);
   box-shadow: 0 0 0 3px rgba(229, 179, 105, 0.15);
+  outline: none;
+}
+
+/* Luxury Select Dropdowns & Options for Dark Mode */
+select,
+select.form-control {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #14171d;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23e5b369' stroke-width='2.2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.1rem 1.1rem;
+  padding-right: 2.8rem;
+  cursor: pointer;
+  color-scheme: dark;
+}
+
+select option,
+select.form-control option {
+  background-color: #14171d !important;
+  color: #f8fafc !important;
+  padding: 0.6rem 0.8rem;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8) sepia(1) saturate(5) hue-rotate(5deg);
+  cursor: pointer;
 }
 
 /* Zone selector chips */
@@ -2133,6 +2172,25 @@ button {
   background: #ffffff;
   border-color: var(--color-accent-gold);
   box-shadow: 0 0 0 3px rgba(158, 105, 29, 0.15);
+}
+
+[data-theme="light"] select,
+[data-theme="light"] select.form-control {
+  background-color: #ffffff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239e691d' stroke-width='2.2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  color: #0f172a;
+  color-scheme: light;
+}
+
+[data-theme="light"] select option,
+[data-theme="light"] select.form-control option {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.4) sepia(1) saturate(5) hue-rotate(5deg);
+  cursor: pointer;
 }
 
 [data-theme="light"] .cat-btn {
