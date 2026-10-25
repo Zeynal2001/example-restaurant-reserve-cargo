@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zeynal2001.github.io/example-restaurant-reserve-cargo/sitemap.xml
