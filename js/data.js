@@ -40,14 +40,14 @@ export const TABLE_ZONES = [
     id: "main_hall",
     icon: "fa-music",
     name: {
-      az: "Əsas Zal (Canlı Musiqi)",
-      en: "Main Hall (Live Piano)",
-      ru: "Главный Зал (Живой рояль)"
+      az: "Əsas Zal (Canlı Musiqi & Toy/Banket)",
+      en: "Main Grand Hall (Live Music & Banquets)",
+      ru: "Главный Гранд Зал (Музыка и Банкеты)"
     },
     desc: {
-      az: "Zərif çilçıraqlar, canlı royal ifası və geniş atmosfer",
-      en: "Crystal chandeliers, live piano evenings & spacious dining",
-      ru: "Хрустальные люстры, звуки рояля и просторная атмосфера"
+      az: "Zərif çilçıraqlar, canlı royal ifası və 120 nəfərlik geniş ziyafət sahəsi",
+      en: "Crystal chandeliers, live piano & grand dining space up to 120 guests",
+      ru: "Хрустальные люстры, рояль и просторный зал для торжеств до 120 гостей"
     }
   },
   {
@@ -73,9 +73,9 @@ export const TABLE_ZONES = [
       ru: "VIP Зал (Каминный)"
     },
     desc: {
-      az: "10 nəfərə qədər xüsusi ailə və işgüzar görüşlər üçün",
-      en: "Exclusive room for up to 10 guests, private meetings & dining",
-      ru: "Приватный зал до 10 персон для деловых и семейных ужинов"
+      az: "15 nəfərə qədər xüsusi ailə, nişan və işgüzar görüşlər üçün",
+      en: "Exclusive room for up to 15 guests, family events & private banquets",
+      ru: "Приватный зал до 15 персон для семейных праздников и закрытых встреч"
     }
   },
   {
@@ -87,9 +87,9 @@ export const TABLE_ZONES = [
       ru: "Романтический уголок"
     },
     desc: {
-      az: "Cütlüklər üçün xüsusi bəzədilmiş sakit və təcrid olunmuş masa",
-      en: "Cozy private table decorated for couples and dates",
-      ru: "Уютный уединенный столик при свечах для двоих"
+      az: "Cütlüklər və evlilik təklifləri üçün xüsusi çiçək və şam bəzədilməsi",
+      en: "Decorated for couples, anniversaries and marriage proposals",
+      ru: "Уютный уединенный столик при свечах для помолвок и свиданий"
     }
   }
 ];
@@ -98,11 +98,27 @@ export const TIME_SLOTS = [
   "12:00", "13:00", "14:30", "16:00", "18:00", "19:00", "20:00", "21:30", "22:30"
 ];
 
+export const EVENT_OCCASIONS = [
+  { id: "casual", name: { az: "Standart Nahar / Şam Yeməyi", en: "Casual Lunch / Dinner", ru: "Обычный обед / ужин" } },
+  { id: "birthday", name: { az: "Ad Günü & Yubiley Qeyd etməsi", en: "Birthday & Anniversary Party", ru: "День рождения и юбилей" } },
+  { id: "wedding", name: { az: "Toy Məclisi / Böyük Ziyafət", en: "Wedding Banquet / Reception", ru: "Свадебный банкет / Торжество" } },
+  { id: "engagement", name: { az: "Nişan / Xınayaxdı Mərasimi", en: "Engagement / Henna Celebration", ru: "Помолвка / Хнаяхды" } },
+  { id: "romantic", name: { az: "Romantik Şam & Evlilik Təklifi", en: "Romantic Proposal Dinner", ru: "Романтический ужин и предложение" } },
+  { id: "corporate", name: { az: "Korporativ Tədbir / Banket", en: "Corporate Dinner & Gala", ru: "Корпоративный банкет" } },
+  { id: "kids", name: { az: "Uşaq Bayramı / Şənlik", en: "Kids Birthday Celebration", ru: "Детский праздник / День рождения" } },
+  { id: "business", name: { az: "İşgüzar Görüş & Danışıqlar", en: "Business Lunch / Executive Meeting", ru: "Деловая встреча / Переговоры" } }
+];
+
 export const MENU_CATEGORIES = [
   {
     id: "all",
     icon: "fa-utensils",
     name: { az: "Bütün Menyu", en: "All Menu", ru: "Всё Меню" }
+  },
+  {
+    id: "burgers",
+    icon: "fa-burger",
+    name: { az: "Burgerlər", en: "Burgers", ru: "Бургеры" }
   },
   {
     id: "steaks",
@@ -137,6 +153,83 @@ export const MENU_CATEGORIES = [
 ];
 
 export const MENU_ITEMS = [
+  // --- BURGERS ---
+  {
+    id: "dish-burger-1",
+    category: "burgers",
+    name: {
+      az: "Aura Black Angus Truffle Burger",
+      en: "Aura Black Angus Truffle Burger",
+      ru: "Трюфельный Бургер Black Angus"
+    },
+    price: 19.00,
+    badge: {
+      az: "Şefin Burgeri",
+      en: "Chef's Burger",
+      ru: "Шеф-бургер"
+    },
+    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=80",
+    desc: {
+      az: "200g şirəli Black Angus mal əti, kərə yağlı brioche bulkası, qara trüfel mayonezi, karamelizə edilmiş soğan, ərinmiş qırmızı çeddar pendiri və xırçıltılı kartof fri ilə.",
+      en: "200g prime Black Angus patty, buttery brioche bun, black truffle aioli, caramelized onions, melted aged cheddar & golden french fries.",
+      ru: "200г сочной котлеты Black Angus, сдобная булочка бриошь, трюфельный соус, карамелизованный лук, чеддер и хрустящий картофель фри."
+    },
+    calories: "780 kcal",
+    time: { az: "15-18 dəq", en: "15-18 min", ru: "15-18 мин" },
+    tags: ["populyar", "halal", "chef"],
+    isPopular: true
+  },
+  {
+    id: "dish-burger-2",
+    category: "burgers",
+    name: {
+      az: "Smash Wagyu Bacon Cheeseburger",
+      en: "Smash Wagyu Bacon Cheeseburger",
+      ru: "Смэш Бургер с беконом Вагю"
+    },
+    price: 22.00,
+    badge: {
+      az: "İkiqat Ət & Çeddar",
+      en: "Double Wagyu & Cheddar",
+      ru: "Двойной Вагю и Чеддер"
+    },
+    image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=700&q=80",
+    desc: {
+      az: "İkiqat qızardılmış incə Wagyu əti, xırçıltılı halal can əti bekonu, ikiqat çeddar, xüsusi hisə verilmiş barbekyu sousu və kənd xiyarı turşusu.",
+      en: "Double smashed Wagyu beef, crispy halal beef bacon, double cheddar, smoked BBQ glaze and homemade pickled cucumber.",
+      ru: "Двойная хрустящая котлета Вагю, хрустящий халяль бекон, двойной чеддер, копченый BBQ соус и домашние маринованные огурчики."
+    },
+    calories: "820 kcal",
+    time: { az: "15 dəq", en: "15 min", ru: "15 мин" },
+    tags: ["populyar", "halal"],
+    isPopular: true
+  },
+  {
+    id: "dish-burger-3",
+    category: "burgers",
+    name: {
+      az: "Crispy Chicken & Jalapeño Burger",
+      en: "Crispy Chicken & Jalapeño Burger",
+      ru: "Хрустящий Чикен Бургер Халапеньо"
+    },
+    price: 16.00,
+    badge: {
+      az: "Xırçıltılı & Acılı",
+      en: "Crispy & Spicy",
+      ru: "Хрустящий и острый"
+    },
+    image: "https://images.unsplash.com/photo-1525164286253-04e68b9d94c6?auto=format&fit=crop&w=700&q=80",
+    desc: {
+      az: "Xüsusi kornfleksli xırçıltılı toyuq filesi, acılı meksika jalapeno bibəri, təzə kələm coleslaw salatı və sarımsaqlı ranch sousu.",
+      en: "Crispy buttermilk cornflake chicken fillet, pickled jalapeños, fresh creamy coleslaw and house ranch sauce.",
+      ru: "Хрустящее куриное филе в кукурузной панировке, маринованный халапеньо, салат коулсло и соус ранч."
+    },
+    calories: "640 kcal",
+    time: { az: "12-15 dəq", en: "12-15 min", ru: "12-15 мин" },
+    tags: ["halal"]
+  },
+
+  // --- STEAKS ---
   {
     id: "dish-1",
     category: "steaks",
@@ -186,6 +279,8 @@ export const MENU_ITEMS = [
     time: { az: "25 dəq", en: "25 min", ru: "25 мин" },
     tags: ["chef", "halal"]
   },
+
+  // --- SEAFOOD ---
   {
     id: "dish-3",
     category: "seafood",
@@ -235,6 +330,8 @@ export const MENU_ITEMS = [
     time: { az: "15 dəq", en: "15 min", ru: "15 мин" },
     tags: ["chef"]
   },
+
+  // --- MAIN COURSES ---
   {
     id: "dish-5",
     category: "main",
@@ -249,7 +346,7 @@ export const MENU_ITEMS = [
       en: "French Classic",
       ru: "Французская классика"
     },
-    image: "https://images.unsplash.com/photo-1514944298352-f47285145b59?auto=format&fit=crop&w=700&q=80",
+    image: "https://images.unsplash.com/photo-1514517521153-1be72277b32f?auto=format&fit=crop&w=700&q=80",
     desc: {
       az: "Xırçıltılı dəri ilə zərif ördək əti, karamelizə edilmiş körpə yerkökü və təbii portağal reduksiyası.",
       en: "Crispy skin tender duck breast, caramelized baby carrots and natural orange reduction.",
@@ -284,6 +381,8 @@ export const MENU_ITEMS = [
     tags: ["vegetarian", "populyar"],
     isPopular: true
   },
+
+  // --- STARTERS ---
   {
     id: "dish-7",
     category: "starters",
@@ -298,7 +397,7 @@ export const MENU_ITEMS = [
       en: "Fresh & Light",
       ru: "Свежее и легкое"
     },
-    image: "https://images.unsplash.com/photo-1592417817098-8f3d6910609a?auto=format&fit=crop&w=700&q=80",
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=700&q=80",
     desc: {
       az: "Krem teksturalı təzə burrata pendiri, pesto sousu, qızardılmış şam fıstığı və balzamik qlazur.",
       en: "Creamy fresh burrata cheese, aromatic basil pesto, toasted pine nuts & balsamic glaze.",
@@ -322,7 +421,7 @@ export const MENU_ITEMS = [
       en: "Chef's Choice",
       ru: "Рекомендация шефа"
     },
-    image: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=700&q=80",
+    image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=700&q=80",
     desc: {
       az: "Nazik doğranmış xam can əti, rukola yarpaqları, kapari, parmezan yonqarları və sızma zeytun yağı.",
       en: "Thinly sliced tenderloin beef, fresh arugula, capers, parmesan shavings & cold-pressed oil.",
@@ -332,6 +431,8 @@ export const MENU_ITEMS = [
     time: { az: "10 dəq", en: "10 min", ru: "10 мин" },
     tags: ["chef", "halal"]
   },
+
+  // --- DESSERTS ---
   {
     id: "dish-9",
     category: "desserts",
@@ -381,6 +482,8 @@ export const MENU_ITEMS = [
     time: { az: "5 dəq", en: "5 min", ru: "5 мин" },
     tags: ["populyar"]
   },
+
+  // --- DRINKS ---
   {
     id: "dish-11",
     category: "drinks",

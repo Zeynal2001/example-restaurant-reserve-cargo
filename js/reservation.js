@@ -1,4 +1,4 @@
-import { TABLE_ZONES, TIME_SLOTS, RESTAURANT_CONFIG, getLocalized } from './data.js';
+import { TABLE_ZONES, TIME_SLOTS, EVENT_OCCASIONS, RESTAURANT_CONFIG, getLocalized } from './data.js';
 import { showToast } from './app.js';
 import { getCurrentLang, TRANSLATIONS } from './i18n.js';
 
@@ -8,11 +8,15 @@ let selectedTime = TIME_SLOTS[4]; // 18:00 default
 export function initReservation() {
   renderZoneChips();
   renderTimeSlots();
+  renderOccasionOptions();
+  renderGuestOptions();
   setupDateInput();
   setupReservationForm();
 
   window.addEventListener('languageChanged', () => {
     renderZoneChips();
+    renderOccasionOptions();
+    renderGuestOptions();
   });
 }
 
@@ -50,6 +54,64 @@ function renderTimeSlots() {
 
   container.innerHTML = TIME_SLOTS.map(time => `
     <option value="${time}" ${time === selectedTime ? 'selected' : ''}>${time}</option>
+  `).join('');
+}
+
+function renderOccasionOptions() {
+  const select = document.getElementById('resOccasion');
+  if (!select) return;
+  const lang = getCurrentLang();
+  const currentVal = select.value;
+
+  select.innerHTML = EVENT_OCCASIONS.map(occ => {
+    const name = getLocalized(occ, 'name', lang);
+    return `<option value="${name}">${name}</option>`;
+  }).join('');
+
+  if (currentVal) {
+    // try to keep selected if possible
+    const exists = Array.from(select.options).some(o => o.value === currentVal);
+    if (exists) select.value = currentVal;
+  }
+}
+
+function renderGuestOptions() {
+  const select = document.getElementById('resGuests');
+  if (!select) return;
+  const lang = getCurrentLang();
+
+  const options = {
+    az: [
+      { val: "1 nəfər", label: "1 nəfər (Fərdi)" },
+      { val: "2 nəfər", label: "2 nəfər (Cütlük)", selected: true },
+      { val: "3-4 nəfər", label: "3 - 4 nəfər (Ailəvi)" },
+      { val: "5-8 nəfər", label: "5 - 8 nəfər (Dostlar)" },
+      { val: "10-15 nəfər", label: "10 - 15 nəfər (VIP Otaq)" },
+      { val: "20-50 nəfər", label: "20 - 50 nəfər (Korporativ / Kiçik Ziyafət)" },
+      { val: "50-120 nəfər", label: "50 - 120 nəfər (Toy / Böyük Banket)" }
+    ],
+    en: [
+      { val: "1 Guest", label: "1 Guest (Individual)" },
+      { val: "2 Guests", label: "2 Guests (Couple)", selected: true },
+      { val: "3-4 Guests", label: "3 - 4 Guests (Family)" },
+      { val: "5-8 Guests", label: "5 - 8 Guests (Friends)" },
+      { val: "10-15 Guests", label: "10 - 15 Guests (VIP Room)" },
+      { val: "20-50 Guests", label: "20 - 50 Guests (Corporate Banquet)" },
+      { val: "50-120 Guests", label: "50 - 120 Guests (Wedding / Grand Banquet)" }
+    ],
+    ru: [
+      { val: "1 персона", label: "1 персона (Индивидуально)" },
+      { val: "2 персоны", label: "2 персоны (Пара)", selected: true },
+      { val: "3-4 персоны", label: "3 - 4 персоны (Семья)" },
+      { val: "5-8 персон", label: "5 - 8 персон (Компания)" },
+      { val: "10-15 персон", label: "10 - 15 персон (VIP Зал)" },
+      { val: "20-50 персон", label: "20 - 50 персон (Корпоратив / Банкет)" },
+      { val: "50-120 персон", label: "50 - 120 персон (Свадьба / Большой Банкет)" }
+    ]
+  }[lang] || [];
+
+  select.innerHTML = options.map(opt => `
+    <option value="${opt.val}" ${opt.selected ? 'selected' : ''}>${opt.label}</option>
   `).join('');
 }
 
@@ -103,7 +165,7 @@ function setupReservationForm() {
       time,
       guests: guests || "2 nəfər",
       zone: getLocalized(zoneObj, 'name', lang),
-      occasion: occasion || "Standart Görüş",
+      occasion: occasion || (lang === 'en' ? "Dining" : lang === 'ru' ? "Обед/Ужин" : "Nahar / Şam"),
       notes: notes || (lang === 'en' ? "None" : lang === 'ru' ? "Нет" : "Xüsusi qeyd yoxdur"),
       createdAt: new Date().toISOString(),
       status: lang === 'en' ? "Confirmed" : lang === 'ru' ? "Подтверждено" : "Təsdiqləndi"
@@ -149,7 +211,8 @@ function showReservationSuccessModal(res) {
       guest: "Qonaq:",
       datetime: "Tarix & Saat:",
       count: "Qonaq Sayı:",
-      zone: "Seçilmiş Masa:",
+      zone: "Seçilmiş Masa / Zal:",
+      event: "Tədbir / Məqsəd:",
       wa: "WhatsApp-a Təsdiq Göndər",
       close: "Bağla"
     },
@@ -161,6 +224,7 @@ function showReservationSuccessModal(res) {
       datetime: "Date & Time:",
       count: "Party Size:",
       zone: "Dining Zone:",
+      event: "Occasion / Event:",
       wa: "Send WhatsApp Confirmation",
       close: "Close"
     },
@@ -171,7 +235,8 @@ function showReservationSuccessModal(res) {
       guest: "Гость:",
       datetime: "Дата и время:",
       count: "Количество гостей:",
-      zone: "Выбранная зона:",
+      zone: "Выбранная зона / Зал:",
+      event: "Повод / Мероприятие:",
       wa: "Подтвердить в WhatsApp",
       close: "Закрыть"
     }
@@ -183,7 +248,8 @@ function showReservationSuccessModal(res) {
     `• ${labels.guest} ${res.name}\n` +
     `• ${labels.datetime} ${res.date} • ${res.time}\n` +
     `• ${labels.count} ${res.guests}\n` +
-    `• ${labels.zone} ${res.zone}`
+    `• ${labels.zone} ${res.zone}\n` +
+    `• ${labels.event} ${res.occasion}`
   );
 
   content.innerHTML = `
@@ -211,6 +277,10 @@ function showReservationSuccessModal(res) {
       <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
         <span style="color: var(--color-text-secondary);"><i class="fa-solid fa-users text-gold"></i> ${labels.count}</span>
         <strong>${res.guests}</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+        <span style="color: var(--color-text-secondary);"><i class="fa-solid fa-champagne-glasses text-gold"></i> ${labels.event}</span>
+        <strong style="color: var(--color-accent-gold);">${res.occasion}</strong>
       </div>
       <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
         <span style="color: var(--color-text-secondary);"><i class="fa-solid fa-chair text-gold"></i> ${labels.zone}</span>
@@ -280,7 +350,7 @@ export function renderUserReservations() {
       </div>
       <p style="font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem;">${item.name} (${item.guests})</p>
       <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin-bottom: 0.8rem;">
-        <i class="fa-regular fa-calendar text-gold"></i> ${item.date} • ${item.time} | <strong>${item.zone}</strong>
+        <i class="fa-regular fa-calendar text-gold"></i> ${item.date} • ${item.time} | <strong>${item.zone}</strong> (${item.occasion})
       </p>
       <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
         <button class="btn btn-secondary btn-sm" onclick="window.cancelReservation('${item.code}')" style="color: #ef4444; border-color: rgba(239,68,68,0.3);">
